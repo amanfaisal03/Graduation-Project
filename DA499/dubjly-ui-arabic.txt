@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دبلجلي - الترجمة والدبلجة الفورية للفيديوهات التعليمية</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #7209b7;
+      --accent: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #38b000;
+      --border: #dee2e6;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      color: var(--dark);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    nav a:hover {
+      color: var(--primary);
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    button {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    main {
+      padding: 2rem 0;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 4rem 0;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .btn-hero {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+    }
+    
+    .dashboard {
+      display: grid;
+      grid-template-columns: 3fr 1.5fr;
+      gap: 2rem;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .card-title {
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 1.1rem;
+    }
+    
+    .card-content {
+      padding: 1.25rem;
+    }
+    
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .upload-area:hover {
+      border-color: var(--primary);
+      background-color: rgba(67, 97, 238, 0.05);
+    }
+    
+    .upload-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .upload-text {
+      margin-bottom: 1rem;
+      color: var(--gray);
+    }
+    
+    .url-input {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    .url-input p {
+      margin-bottom: 1rem;
+      color: var(--gray);
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    input[type="text"] {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .video-player {
+      width: 100%;
+      background-color: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16/9;
+    }
+    
+    .video-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+    
+    .subtitles {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .subtitle-btn {
+      background-color: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+    }
+    
+    .subtitle-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .video-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .video-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--gray);
+      background-color: transparent;
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+    }
+    
+    .video-btn:hover {
+      background-color: var(--light);
+    }
+    
+    .chat-interface {
+      margin-top: 1rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .message {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+    
+    .user-message {
+      background-color: var(--primary);
+      color: white;
+      align-self: flex-start;
+    }
+    
+    .ai-message {
+      background-color: var(--light);
+      color: var(--dark);
+      align-self: flex-end;
+    }
+    
+    .chat-input {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .terminology-item {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .terminology-item:hover {
+      background-color: var(--light);
+    }
+    
+    .term-english {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .term-arabic {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .terminology-details {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .term-details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .term-details-title {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .term-details-content {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .progress-container {
+      margin-top: 2rem;
+    }
+    
+    .progress-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--border);
+      border-radius: 4px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background-color: var(--success);
+      border-radius: 4px;
+      width: 75%;
+    }
+    
+    /* RTL specific styles */
+    .user-message {
+      align-self: flex-start;
+    }
+    
+    .ai-message {
+      align-self: flex-end;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      
+      nav ul {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon">د</div>
+        <span>دبلجلي</span>
+      </div>
+      
+      <nav>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#">المكتبة</a></li>
+          <li><a href="#">كيف يعمل</a></li>
+          <li><a href="#">الأسعار</a></li>
+        </ul>
+      </nav>
+      
+      <div class="auth-buttons">
+        <button class="btn-outline">تسجيل الدخول</button>
+        <button class="btn-primary">إنشاء حساب</button>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <section class="hero">
+        <h1>تعلم بدون حواجز لغوية</h1>
+        <p>دبلجلي تقوم بترجمة ودبلجة الفيديوهات التعليمية إلى اللغة العربية، مما يساعد طلاب الجامعات على الوصول إلى المعرفة دون قيود اللغة.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary btn-hero">ابدأ الآن</button>
+          <button class="btn-outline btn-hero">كيف يعمل</button>
+        </div>
+      </section>
+      
+      <section class="dashboard">
+        <div class="main-panel">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">رفع الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="upload-area">
+                <div class="upload-icon">↑</div>
+                <h3>اسحب وأفلت ملف الفيديو</h3>
+                <p class="upload-text">أو انقر لتصفح الملفات (MP4, MKV, MOV حتى 1 جيجابايت)</p>
+                <button class="btn-primary">اختيار ملف</button>
+              </div>
+              
+              <div class="url-input">
+                <p>أو الصق رابط من يوتيوب أو منصة تعليمية</p>
+                <div class="input-group">
+                  <input type="text" placeholder="https://www.youtube.com/watch?v=...">
+                  <button class="btn-primary">معالجة</button>
+                </div>
+              </div>
+              
+              <div class="progress-container">
+                <div class="progress-title">
+                  <span>جاري معالجة الفيديو...</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">مشغل الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="video-player">
+                <!-- Video player placeholder -->
+                <img src="/api/placeholder/800/450" alt="مكان مشغل الفيديو" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              
+              <div class="video-controls">
+                <div class="subtitles">
+                  <button class="subtitle-btn">الإنجليزية</button>
+                  <button class="subtitle-btn active">العربية</button>
+                  <button class="subtitle-btn">مزدوج</button>
+                </div>
+                
+                <div class="video-actions">
+                  <button class="video-btn">⏬ تنزيل</button>
+                  <button class="video-btn">📋 ملخص</button>
+                  <button class="video-btn">📝 اختبار</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">المساعد الذكي</h2>
+            </div>
+            <div class="card-content">
+              <div class="chat-interface">
+                <div class="chat-messages">
+                  <div class="message ai-message">
+                    مرحباً! أنا مساعدك التعليمي الذكي. اسألني أي سؤال حول محتوى الفيديو.
+                  </div>
+                  <div class="message user-message">
+                    هل يمكنك شرح مفهوم تعلم الآلة بطريقة مبسطة؟
+                  </div>
+                  <div class="message ai-message">
+                    بالتأكيد! تعلم الآلة هو طريقة تتعلم بها أجهزة الكمبيوتر أنماطاً من البيانات دون برمجة صريحة. إنه مثل تعليم الكمبيوتر التعرف على القطط من خلال إظهار آلاف صور القطط بدلاً من كتابة قواعد محددة.
+                  </div>
+                </div>
+                
+                <div class="chat-input">
+                  <input type="text" placeholder="اسأل سؤالاً حول محتوى الفيديو..." style="flex: 1;">
+                  <button class="btn-primary">إرسال</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">المصطلحات الأساسية</h2>
+            </div>
+            <div class="card-content" style="padding: 0;">
+              <div class="terminology-list">
+                <div class="terminology-item">
+                  <div class="term-english">Deep Learning</div>
+                  <div class="term-arabic">التعلم العميق</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Neural Network</div>
+                  <div class="term-arabic">الشبكة العصبية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Algorithm</div>
+                  <div class="term-arabic">الخوارزمية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Computer Vision</div>
+                  <div class="term-arabic">رؤية الحاسوب</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Natural Language Processing</div>
+                  <div class="term-arabic">معالجة اللغة الطبيعية</div>
+                </div>
+              </div>
+              
+              <div class="terminology-details">
+                <div class="term-details-header">
+                  <div class="term-details-title">Neural Network</div>
+                  <button class="btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">حفظ المصطلح</button>
+                </div>
+                <div class="term-details-content">
+                  الشبكة العصبية هي نموذج حسابي مستوحى من الدماغ البشري. تتكون من عقد متصلة (خلايا عصبية) تعالج وتنقل المعلومات. تشكل الشبكات العصبية أساس العديد من أنظمة الذكاء الاصطناعي الحديثة.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">ملخص الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <p style="line-height: 1.6; color: var(--gray);">
+                تقدم هذه المحاضرة المفاهيم الأساسية لتعلم الآلة وتطبيقاتها. المواضيع الرئيسية التي تمت تغطيتها تشمل:
+              </p>
+              <ul style="margin-top: 1rem; margin-right: 1.5rem; color: var(--gray); line-height: 1.6;">
+                <li>أنواع أساليب تعلم الآلة</li>
+                <li>التعلم الخاضع للإشراف مقابل التعلم غير الخاضع للإشراف</li>
+                <li>الشبكات العصبية والتعلم العميق</li>
+                <li>تطبيقات واقعية في الرعاية الصحية والتعليم</li>
+                <li>الاعتبارات الأخلاقية في تطوير الذكاء الاصطناعي</li>
+              </ul>
+              <button class="btn-primary" style="margin-top: 1.5rem; width: 100%;">إنشاء ملاحظات مفصلة</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

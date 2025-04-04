@@ -1,7 +1,7 @@
 import yt_dlp
 import ffmpeg
 import subprocess
-
+import os
 
 def check_video(video_url):
     ydl_opts = {
@@ -26,17 +26,29 @@ def check_video(video_url):
 
 video_url = input(" put your URL : ")
 result = check_video(video_url)
-print(result)
+print(result) 
 
-def convert_video_to_audio(video_url, audio_file_path):
-    command = f"ffmpeg -i {video_url} -vn -acodec pcm_s16le -ar 44100 -ac 2 {audio_file_path}"
-    subprocess.call(command, shell=True)
+def extract_audio(video_url, output_file, output_format='mp3'):
 
-convert_video_to_audio("input_video.mp4", "output_audio.wav")
+    if output_format not in ['mp3', 'aac']:
+        raise ValueError("Invalid output format. Choose 'mp3' or 'aac'.")
 
-def stream_video_audio(video_url):
-    command = ["ffplay", "-nodisp", "-autoexit", video_url]
-    subprocess.call(command)
+    temp_audio_file = "temp_audio.m4a"
+
+    yt_dlp_cmd = [
+        'yt-dlp', '-f', 'bestaudio', '-o', temp_audio_file, video_url
+    ]
+    subprocess.run(yt_dlp_cmd, check=True)
+
+    ffmpeg_cmd = [
+        'ffmpeg', '-i', temp_audio_file, '-vn',
+        '-acodec', 'libmp3lame' if output_format == 'mp3' else 'aac',
+        '-ar', '44100', '-ab', '192k', '-f', output_format, output_file
+    ]
+    subprocess.run(ffmpeg_cmd, check=True)
+
+    os.remove(temp_audio_file)
 
 
-stream_video_audio(video_url)  
+output_file = "extracted_audio.mp3"
+extract_audio(video_url, output_file, output_format='mp3')

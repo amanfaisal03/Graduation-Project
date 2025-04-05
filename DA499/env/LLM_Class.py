@@ -173,4 +173,4 @@ if __name__ == "__main__":
     print(llm.Questions_Answers())
     print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
     print(llm)
-    pirnt(help(llm.Summarize_Keywords))
+    print(help(llm.Summarize_Keywords))

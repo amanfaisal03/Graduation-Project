@@ -1,6 +1,7 @@
 from LLM_Class import The_LLM
 from groq import Groq
 
+# This class for using a LLM from GROQ Cloud so rather than download the LLM on our system, we can use this class to use the LLM from the cloud.
 class Groq_Env(The_LLM):
 
     def __init__(self, API_Key="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",Model="qwen-2.5-32b"):

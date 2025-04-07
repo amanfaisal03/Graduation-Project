@@ -2,7 +2,7 @@
 class The_LLM():
     def __init__(self, model,Text):
         self.model = model
-        self.T_text = Text # text with time
+        self.T_Text = Text # text with time
         self.C_Text = self.del_time(Text) # text without time
         self.Prompts = {
                         "Summarize" : "based on the following text that represente a video transcript, I want you to generate a summary for this video in the arabic language. The text :"+f"\n'''{self.C_Text }'''"   
@@ -11,7 +11,7 @@ class The_LLM():
                         ,"Summarize & Keywords" : "based on the following text that represente a video transcript,I want you to generate a summary for this video in the arabic language then specify the most improtant keywords (the words that are improtant to know for any one want to be good in the video filed) \
                             in the arabic language and give them to me with a short summary about each one of them also in the Arabic language. The text :"+f"\n'''{self.C_Text }'''"
                         ,"Transcript": "based on the following text that represente a video transcript, I want you to convert it to arabic language.\
-                            keep in your mind that i want it more similar from the time spending in the read. The English text :"+f"\n'''{self.C_Text }'''"
+                            keep in your mind that i want it more similar from the time spending in the read. The English text :"+f"\n'''{self.T_Text }'''"
                         #,"Translate" : "based on the following text that represente a video transcript, I want you to translate the text to the arabic language. The text :"+f"\n'''{self.C_Text }'''"
                         ,"Quesitons & Answers" : "based on the following text that represente a video transcript, I want you to generate 5 test questions in the arabic language with them answers also in the Arabic. The text :"+f"\n'''{self.C_Text }'''"
                         ,"ChatBot Answer" : "based on the following text that represente a video transcript and your knowledge, answer the question that i will give to you. The text : "+f"\n'''{self.C_Text }''' \n"+" the question is : "
@@ -100,7 +100,7 @@ class The_LLM():
         Generate a transcript using the LLM model.
         """
         if text is None:
-            text = self.C_Text
+            text = self.T_Text
 
         # Generate transcript using the LLM model
         transcript = self.model.generate(model, prompt =self.Prompts["Transcript"])["response"]

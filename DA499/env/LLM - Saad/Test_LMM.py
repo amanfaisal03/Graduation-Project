@@ -1,4 +1,6 @@
 from LLM_Class import The_LLM
+from LLM_Online import Groq_Env
+from LLM_Online import Full_LLM
 import ollama
 
 #main code
@@ -18,10 +20,9 @@ if __name__ == "__main__":
     00:04:41	neuron is activated d the result is fed to an activation function leave your answers in the comments section below three of you stand a chance to win amazon vouchers so hurry some of the popular deep learning frameworks include tensorflow pytorch keras deep learning 4j cafe and microsoft cognitive toolkit considering the future predictions for deep learning and ai we seem to have only scratched the surface in fact horus technology is working on a device for the blind that uses deep learning with
     00:05:14	computer vision to describe the world to the users replicating the human mind at the entirety may be not just an episode of science fiction for too long the future is indeed full of surprises and that is deep learning for you in short if you enjoyed this video do like and share it also subscribe to our channel if you haven't yet as we have a lot more exciting videos coming up fun learning till then
     """
-    llm = The_LLM(ollama, text)
-    model = "llama3.1:latest"
-    print(type(model))
 
+    # Test "The_LLM" class with Ollama model :
+    '''llm = The_LLM(ollama, text)
     print(llm.Summarize())
     print(llm.Keywords())
     print(llm.Summarize_Keywords())
@@ -30,4 +31,19 @@ if __name__ == "__main__":
     print(llm.Questions_Answers())
     print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
     print(llm)
+    help(llm.Summarize_Keywords)'''
+
+    #Test "Full_LLM" class with Groq Cloud , using qwen model (Online one):
+    model = "qwen-2.5-32b"
+    Groq_key = "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"
+    llm = Full_LLM(model=model, api_key=Groq_key, Text=text, Online=True)
+    print(llm.Summarize())
+    print(llm.Keywords())
+    print(llm.Summarize_Keywords())
+    print(llm.Transcript())
+    print(llm.Questions_Answers())
+    print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
+    print(llm)
     help(llm.Summarize_Keywords)
+
+

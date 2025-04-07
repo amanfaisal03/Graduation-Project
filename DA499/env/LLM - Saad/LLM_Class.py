@@ -1,4 +1,5 @@
-class The_LLM:
+#from Prompt_Class import Prompt
+class The_LLM():
     def __init__(self, model,Text):
         self.model = model
         self.T_text = Text # text with time
@@ -38,9 +39,14 @@ class The_LLM:
         from ollama import chat
         from ollama import ChatResponse
 
-        response: ChatResponse = chat(model=modell, messages=[{ 'role': 'user','content': question}])
-        message = response.message.content # or response['message']['content']     
-        return message
+        response: ChatResponse = chat(model=modell, messages=[{ 'role': 'user','content': question},])
+        # response.message.content doesn't work, but response['message']['content']  work very well.
+        #Notes :
+            #retrun the response from the model in one line it's take less time than make a loop to get the response. 
+            #s = ""
+            #for chanke in response: s+= chanke['message']['content']
+
+        return response['message']['content'] 
     
     def model_answer(self, question, model):
         """
@@ -60,7 +66,7 @@ class The_LLM:
         if text is None:
             text = self.C_Text
         # Generate summary using the LLM model
-        summary = self.model.generate(model, prompt = self.Prompts["Summarize"])["response"]
+        summary = self.ollama_answer(self.Prompts["Summarize"], model)
         
         return summary
 
@@ -101,17 +107,6 @@ class The_LLM:
         
         return transcript
     
-        '''    def Translate(self,text = None, model = "llama3.1:latest"):
-                """
-                Translate the text using the LLM model.
-                """
-                if text is None:
-                    text = self.C_Text
-
-                # Generate translation using the LLM model
-                translation = self.model.generate(model, prompt =self.Prompts["Translate"])["response"]
-                
-                return translation'''
     
     def Questions_Answers(self,text = None, model = "llama3.1:latest"):
         """

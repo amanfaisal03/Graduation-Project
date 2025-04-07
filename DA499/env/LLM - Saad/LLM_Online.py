@@ -90,7 +90,7 @@ class Full_LLM(Groq_Env):
         print("Deleting Time Done")
         return s
 
-    def ollama_answer(self, question, modell = "llama3.1:latest"):
+    def ollama_answer(self, question, model = "llama3.1:latest"):
         """
         Generate an answer using the ollama models.
         This function will help us in test ollama models and compare between them.
@@ -99,7 +99,7 @@ class Full_LLM(Groq_Env):
         from ollama import chat
         from ollama import ChatResponse
 
-        response: ChatResponse = chat(model=modell, messages=[{ 'role': 'user','content': question},])
+        response: ChatResponse = chat(model=model, messages=[{ 'role': 'user','content': question},])
         # response.message.content doesn't work, just response['message']['content']     
         return response['message']['content'] 
     
@@ -109,75 +109,53 @@ class Full_LLM(Groq_Env):
         This function will help us in test multiple models and compare between them.
         We can use it inside the other methods.
         """
-        # Generate answer using the LLM model
         if self.online:
             answer = self.Groq_chat_answer(role=role, messages_content=question)
         else:
             answer = self.ollama_answer(question, self.model)
         return answer
 
-    def Summarize(self,text = None, model = "llama3.1:latest"):
+    def Summarize(self):
         """
         Summarize the text using the LLM model.
         """
-        if text is None:
-            text = self.C_Text
-        # Generate summary using the LLM model & Return it as a string        
         return self.model_answer(self.Prompts["Summarize"])
 
-    def Keywords(self,text = None, model = "llama3.1:latest"):
+    def Keywords(self):
         """
-        Extract keywords from the text using the LLM model.
+        Extract keywords from the text using the LLM model & Return it as a string.
         """
-        if text is None:
-            text = self.C_Text
-        # Generate keywords using the LLM model & Return it as a string        
         return self.model_answer(self.Prompts["Keywords"])
     
-    def Summarize_Keywords(self,text = None, model = "llama3.1:latest"):
+    def Summarize_Keywords(self):
         """
         Summarize the text and extract keywords using the LLM model.
         So rather than using the two methods (Summarize & Keywords) we can use this method to do both of them in one time.
         This method is more efficient than the two methods above.
         """
-        if text is None:
-            text = self.C_Text
-
-        # Generate summary and keywords using the LLM model
         return self.model_answer(self.Prompts["Summarize & Keywords"])
     
-    def Transcript(self,text = None, model = "llama3.1:latest"):
+    def Transcript(self):
         """
-        Generate a transcript using the LLM model.
+        Generate a transcript using the LLM model & Return it as a string.
         """
-        if text is None:
-            text = self.T_Text
-
-        # Generate transcript using the LLM model & Return it as a string
         return self.model_answer(self.Prompts["Transcript"])
     
-    def Questions_Answers(self,text = None, model = "llama3.1:latest"):
+    def Questions_Answers(self):
         """
-        Generate test questions and answers using the LLM model.
+        Generate test questions and answers using the LLM model & Return it as a string        
         """
-        if text is None:
-            text = self.C_Text
-        # Generate test questions and answers using the LLM model & Return it as a string        
         return self.model_answer(self.Prompts["Quesitons & Answers"])
     
-    def ChatBot_Answer(self,text = None, model = "llama3.1:latest", question = None):
+    def ChatBot_Answer(self, text = None, question = None):
         """
         Generate a chatbot answer using the LLM model.
         """
         if text is None:
             text = self.C_Text
 
-        # Generate chatbot answer using the LLM model
-        if question is None:
-            raise ValueError("Question cannot be None.")
-        
         question = self.Prompts["ChatBot Answer"] + question        
         return self.model_answer(question)
-    
+
     def __str__(self):
         return f"LLM Class with model: {self.model} and text: {self.C_Text}"

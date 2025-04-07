@@ -13,6 +13,11 @@ class Prompt:
         {self.C_Text}
         """
         return prompt
+
     
-    
-    
+# Optimization :
+'''
+1. Class Name: Prompt
+2. Make a Memory Conversaiton
+3.  
+'''

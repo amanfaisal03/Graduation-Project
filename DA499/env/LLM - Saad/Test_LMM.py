@@ -37,14 +37,12 @@ if __name__ == "__main__":
     model = "meta-llama/llama-4-scout-17b-16e-instruct"
     Groq_key = "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"
     llm = Full_LLM(model=model, api_key=Groq_key, Text=text, Online=True)
-    #print(llm.Summarize())
-    #print(llm.Keywords())
-    #print(llm.Summarize_Keywords())
+    print(llm.Summarize())
+    print(llm.Keywords())
+    print(llm.Summarize_Keywords())
     print(llm.Transcript())
-    #print(llm.Questions_Answers())
-    #print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
-    #print(llm)
-    #help(llm.Summarize_Keywords)
-    #print(llm.T_Text)
-
-
+    print(llm.Questions_Answers())
+    print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
+    print(llm)
+    help(llm.Summarize_Keywords)
+    print(llm.T_Text)

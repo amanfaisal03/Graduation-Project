@@ -8,3 +8,6 @@
 # git pull
 
 # local       | Container |          Global
+
+
+# git clone -> git add -> git commit -> git push

@@ -1,0 +1,56 @@
+[0.00 - 4.96] Ever wondered how Google translates an entire webpage to a different language in a matter
+[4.96 - 11.12] of seconds? Or your phone gallery group's images based on their location? All of this is a product
+[11.12 - 17.20] of deep learning. But what exactly is deep learning? Deep learning is a subset of machine
+[17.20 - 23.20] learning, which in turn is a subset of artificial intelligence. Artificial intelligence is a technique
+[23.20 - 29.12] that enables a machine to mimic human behavior. Machine learning is a technique to achieve AI
+[29.20 - 34.56] through algorithms trained with data. And finally, deep learning is a type of machine
+[34.56 - 39.36] learning inspired by the structure of the human brain. In terms of deep learning,
+[39.36 - 44.96] this structure is called an artificial neural network. Let's understand deep learning better
+[44.96 - 49.76] and how it's different from machine learning. Say we create a machine that could differentiate
+[49.76 - 54.96] between tomatoes and cherries. If done using machine learning, we'd have to tell the machine
+[54.96 - 60.48] the features based on which the two can be differentiated. These features could be the size
+[60.48 - 65.76] and the type of stem on them. With deep learning on the other hand, the features are picked out by
+[65.76 - 71.36] the neural network without human intervention. Of course, that kind of independence comes at the
+[71.36 - 77.20] cost of having a much higher volume of data to train our machine. Now, let's dive into the
+[77.20 - 83.20] working of neural networks. Here we have three students, each of them write down the digit nine
+[83.20 - 89.28] on a piece of paper. Notably, they don't all write it identically. The human brain can easily
+[89.28 - 96.24] recognize the digits. But what if a computer had to recognize them? That's where deep learning comes
+[96.24 - 102.56] in. Here is a neural network trained to identify handwritten digits. Each number is present as
+[102.56 - 111.68] an image of 28 times 28 pixels. Now, that amounts to a total of 784 pixels. Neurons, the core entity
+[111.68 - 118.32] of a neural network, is where the information processing takes place. Each of the 784 pixels
+[118.32 - 124.16] is fed to a neuron in the first layer of our neural network. This forms the input layer.
+[124.72 - 130.24] On the other end, we have the output layer with each neuron representing a digit with the hidden
+[130.24 - 135.76] layers existing between them. The information is transferred from one layer to another over
+[135.84 - 141.68] connecting channels. Each of these has a value attached to it, and hence is called a weighted
+[141.68 - 148.80] channel. All neurons have a unique number associated with it called bias. This bias is added to the
+[148.80 - 155.76] weighted sum of inputs reaching the neuron, which is then applied to a function known as the activation
+[155.76 - 162.32] function. The result of the activation function determines if the neuron gets activated. Every
+[162.32 - 168.24] activated neuron passes on information to the following layers. This continues up till the
+[168.24 - 175.44] second last layer. The one neuron activated in the output layer corresponds to the input digit.
+[175.44 - 180.48] The weights and bias are continuously adjusted to produce a well-trained network.
+[180.48 - 186.16] So, where is deep learning applied? In customer support, when most people converse with customer
+[186.16 - 192.00] support agents, the conversation seems so real. They don't even realize that it's actually a
+[192.00 - 198.32] bot on the other side. In medical care, neural networks detect cancer cells and analyze MRI
+[198.32 - 205.52] images to give detailed results. Self-driving cars. What seemed like science fiction is now
+[205.52 - 212.16] a reality. Apple, Tesla, and Nissan are only a few of the companies working on self-driving cars,
+[212.16 - 217.84] so deep learning has a vast scope, but it too faces some limitations.
+[217.84 - 223.76] The first as we discussed earlier is data. While deep learning is the most efficient way to deal
+[223.76 - 230.24] with unstructured data, a neural network requires a massive volume of data to train. Let's assume we
+[230.24 - 236.32] always have access to the necessary amount of data. Processing this is not within the capability of
+[236.32 - 242.24] every machine. And that brings us to our second limitation, computational power.
+[242.24 - 247.84] Training a neural network requires graphical processing units, which have thousands of
+[247.84 - 255.92] cores as compared to CPUs. And GPUs are of course more expensive. And finally, we come down to
+[255.92 - 262.64] training time. Deep neural networks take hours or even months to train. The time increases with
+[262.64 - 269.12] the amount of data and number of layers in the network. So, here's a short quiz for you. Arrange
+[269.12 - 275.92] the following statements in order to describe the working of a neural network. A. The bias is added.
+[275.92 - 284.00] B. The weighted sum of the inputs is calculated. C. Specific neuron is activated. D. The result
+[284.00 - 289.12] is fed to an activation function. Leave your answers in the comments section below.
+[289.12 - 294.24] Three of you stand a chance to win Amazon vouchers. So, hurry! Some of the popular deep
+[294.24 - 301.20] learning frameworks include TensorFlow, PyTorch, Keras, Deep Learning 4j, Cafe, and Microsoft
+[301.20 - 307.44] Cognitive Toolkit. Considering the future predictions for deep learning and AI, we seem to have only
+[307.44 - 313.20] scratched the surface. In fact, Horace Technology is working on a device for the blind that uses
+[313.20 - 318.72] deep learning with computer vision to describe the world to the users. Replicating the human
+[318.72 - 325.60] mind at the entirety may be not just an episode of science fiction for too long. The future is
+[325.60 - 332.00] indeed full of surprises, and that is deep learning for you in short. If you enjoyed this video,
+[332.00 - 337.20] do like and share it. Also, subscribe to our channel if you haven't yet, as we have a lot
+[337.20 - 350.88] more exciting videos coming up. Fun learning till then!

@@ -14,10 +14,14 @@ if __name__ == "__main__":
     tts = TTS(video_url)
     The_text = tts.run_all()
     File = open("Transcript.txt", "w")
-    File.write(The_text)
+    File.writelines(The_text)
     File.close()
     print(The_text)
-    
+
+    # file = open("Transcript.txt", "r")
+    # The_text = file.read()
+    # file.close()
+
     # Test Phase 2: LLM Class
     text_file = open("LLM.txt", "w")
 
@@ -25,18 +29,18 @@ if __name__ == "__main__":
     Groq_key = "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"
     llm = Full_LLM(model=model, api_key=Groq_key, Text=The_text, Online=True)
     summary = llm.Summarize()
-    print("The Summary :\n",summary);text_file.write("The Summary :\n"+summary)
+    print("The Summary :\n",summary)#;text_file.writelines([summary])
     keywords = llm.Keywords()
-    print("\nThe Keywords: \n",keywords);text_file.write("\nThe Keywords: \n"+keywords)
+    print("\nThe Keywords: \n",keywords)#;text_file.writelines("\nThe Keywords: \n"+keywords)
     Summary_Keywords = llm.Summarize_Keywords()
-    print("\nSummrize & Keywords:\n",Summary_Keywords);text_file.write("\nSummrize & Keywords:\n"+Summary_Keywords)
+    print("\nSummrize & Keywords:\n",Summary_Keywords)#;text_file.writelines("\nSummrize & Keywords:\n"+Summary_Keywords)
     Transcript = llm.Transcript() # the input text for TTS
-    print("\nThe Transcript:\n",Transcript);text_file.write("\nThe Transcript:\n"+Transcript)
+    print("\nThe Transcript:\n",Transcript)#;text_file.writelines("\nThe Transcript:\n"+Transcript)
     Question_Answers = llm.Questions_Answers()
-    print("\nQuestions & Answers:\n",Question_Answers);text_file.write("\nQuestions & Answers:\n"+Question_Answers)
-    Question = "What is the main topic of the text?" # Example question, This should be user input
+    print("\nQuestions & Answers:\n",Question_Answers);#text_file.writelines("\nQuestions & Answers:\n"+Question_Answers)
+    Question = "يخوي شو هو الموظوع تبع الفيديو" # Example question, This should be user input
     ChatBot_Answer = llm.ChatBot_Answer(question=Question)
-    print("\nChatBot Answer:\n",ChatBot_Answer);text_file.write("\nChatBot Answer:\n"+ChatBot_Answer)
+    print("\nChatBot Answer:\n",ChatBot_Answer)#;text_file.writelines("\nChatBot Answer:\n"+ChatBot_Answer)
     text_file.close()
     #print(llm)
 

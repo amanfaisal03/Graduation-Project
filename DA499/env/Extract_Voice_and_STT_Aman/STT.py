@@ -11,7 +11,7 @@ class TTS():
         self.audio_name="audio.mp3"
         self.output_format='mp3'
         self.temp_audio_file = "temp_audio.m4a"
-        self.model = WhisperModel('small',device='cuda',compute_type='float16')
+        self.model = WhisperModel('small',device='cpu')#device='cuda',compute_type='float16')
         self.check_video()
         
     def check_video(self):

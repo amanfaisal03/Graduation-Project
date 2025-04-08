@@ -2,6 +2,7 @@ import yt_dlp
 import ffmpeg
 import subprocess
 import os
+from faster_whisper import WhisperModel
 
 def check_video(video_url):
     ydl_opts = {
@@ -24,9 +25,9 @@ def check_video(video_url):
     except yt_dlp.utils.DownloadError:
         return {"status": "Not Available", "message": "Video not found or restricted."}
 
-video_url = input(" put your URL : ")
-result = check_video(video_url)
-print(result) 
+# video_url = input(" put your URL : ")
+# result = check_video(video_url)
+# print(result) 
 
 def extract_audio(video_url, output_file, output_format='mp3'):
 
@@ -50,8 +51,16 @@ def extract_audio(video_url, output_file, output_format='mp3'):
     os.remove(temp_audio_file)
 
 
-output_file = "extracted_audio.mp3"
-extract_audio(video_url, output_file, output_format='mp3')
+# output_file = "extracted_audio.mp3"
+# extract_audio(video_url, output_file, output_format='mp3')
 
-
-#test
+model=WhisperModel('small',device='cuda',compute_type='float16')
+segmints,info=model.transcribe(r"extracted_audio.mp3",beam_size=5)
+s = ""
+for segmint in segmints :
+    new_line=f"[{segmint.start:.2f} - {segmint.end:.2f}]{segmint.text}\n"
+    s+= new_line
+    print(new_line,end="")
+text_file = open("Text.txt", "w")
+text_file.write(s)
+text_file.close()

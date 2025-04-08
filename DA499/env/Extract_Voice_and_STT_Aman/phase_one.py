@@ -25,9 +25,6 @@ def check_video(video_url):
     except yt_dlp.utils.DownloadError:
         return {"status": "Not Available", "message": "Video not found or restricted."}
 
-# video_url = input(" put your URL : ")
-# result = check_video(video_url)
-# print(result) 
 
 def extract_audio(video_url, output_file, output_format='mp3'):
 
@@ -51,11 +48,14 @@ def extract_audio(video_url, output_file, output_format='mp3'):
     os.remove(temp_audio_file)
 
 
-# output_file = "extracted_audio.mp3"
-# extract_audio(video_url, output_file, output_format='mp3')
+video_url = input(" put your URL : ")
+result = check_video(video_url)
+print(result) 
+output_file = "extracted_audio.mp3"
+extract_audio(video_url, output_file, output_format='mp3')
 
 model=WhisperModel('small',device='cuda',compute_type='float16')
-segmints,info=model.transcribe(r"extracted_audio.mp3",beam_size=5)
+segmints,info=model.transcribe(output_file,beam_size=5)
 s = ""
 for segmint in segmints :
     new_line=f"[{segmint.start:.2f} - {segmint.end:.2f}]{segmint.text}\n"

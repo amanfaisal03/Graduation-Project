@@ -1,25 +1,30 @@
 #here we will test our project, pipline and parts of it.
-from Extract_Voice_and_STT_Aman.phase_one import *
+from Extract_Voice_and_STT_Aman.phase_one import check_video, extract_audio
 from LLM_Saad.LLM_Online import *
+import yt_dlp
+import ffmpeg
+import subprocess
+import os
+from faster_whisper import WhisperModel
 
 if __name__ == "__main__":
 
     # Test Phase 1: Extract Voice and STT
-    video_url = input(" put your URL : ")
+    video_url = input(" put your URL : ") #Video Link: https://www.youtube.com/watch?v=6M5VXKLf4D4
     result = check_video(video_url)
     print(result)
     output_file = "extracted_audio.mp3"
     extract_audio(video_url, output_file, output_format='mp3') 
 
     model=WhisperModel('small',device='cuda',compute_type='float16')
-    segmints,info=model.transcribe(r"extracted_audio.mp3",beam_size=5)
+    segmints,info=model.transcribe(output_file,beam_size=5)
     The_text= ""
     for segmint in segmints :
         new_line=f"[{segmint.start:.2f} - {segmint.end:.2f}]{segmint.text}\n"
         The_text+= new_line
         #print(new_line,end="")
     text_file = open("Text.txt", "w")
-    text_file.write(s)
+    text_file.write(The_text)
     text_file.close()
     
     # Test Phase 2: LLM Class

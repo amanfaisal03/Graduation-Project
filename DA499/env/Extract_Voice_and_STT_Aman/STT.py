@@ -8,7 +8,7 @@ class TTS():
 
     def __init__(self,url): # tts = TTS(url_video)
         self.video_url=url
-        self.audio_name="audio"
+        self.audio_name="audio.mp3"
         self.output_format='mp3'
         self.temp_audio_file = "temp_audio.m4a"
         self.model = WhisperModel('small',device='cuda',compute_type='float16')
@@ -57,7 +57,7 @@ class TTS():
         os.remove(self.temp_audio_file)
 
 
-    def TTS_M(self): # tts.TTS_M()
+    def STT_M(self): # tts.TTS_M()
         segments=self.model.transcribe(self.audio_name, beam_size=5)[0]
         s = ""
         for segment in segments :
@@ -68,17 +68,7 @@ class TTS():
     def run_all(self): # tts.run_all()
         self.check_video()
         self.extract_audio()
-        return self.TTS_M()
+        return self.STT_M()
 
     def __str__(self):
         return f"Video URL: {self.video_url}\nAudio File: {self.audio_name}\nOutput Format: {self.output_format}"
-
-
-
-video_url = input(" put your URL : ")
-tts = TTS(video_url)
-Transcript = tts.run_all()
-File = open("Transcript.txt", "w")
-File.write(Transcript)
-File.close()
-print(Transcript)

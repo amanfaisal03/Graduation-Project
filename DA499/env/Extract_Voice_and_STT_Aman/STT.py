@@ -4,15 +4,15 @@ import subprocess
 import os
 from faster_whisper import WhisperModel
 
-
-
 class TTS():
 
-    def __init__(self,url):
+    def __init__(self,url): # tts = TTS(url_video)
         self.video_url=url
-        self.available=self.check_video()
-
-    
+        self.audio_name="audio"
+        self.output_format='mp3'
+        self.temp_audio_file = "temp_audio.m4a"
+        self.model = WhisperModel('small',device='cuda',compute_type='float16')
+        self.check_video()
         
     def check_video(self):
         ydl_opts = {
@@ -21,7 +21,7 @@ class TTS():
         "noplaylist": True,  
         "extract_flat": True,  
         "force_generic_extractor": True,  
-    }
+                    }
 
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -37,46 +37,48 @@ class TTS():
              raise ValueError("Video not found or restricted.")
 
 
-    def extract_audio(self,output_file, output_format='mp3'):
+    def extract_audio(self): # tts.extract_audio()
 
-        if output_format not in ['mp3', 'aac']:
-            raise ValueError("Invalid output format. Choose 'mp3' or 'aac'.")
-
-        temp_audio_file = "temp_audio.m4a"
+        #if self.output_format not in ['mp3', 'aac']:
+        #    raise ValueError("Invalid output format. Choose 'mp3' or 'aac'.")
 
         yt_dlp_cmd = [
-                   'yt-dlp', '-f', 'bestaudio', '-o', temp_audio_file, self.video_url
+                   'yt-dlp', '-f', 'bestaudio', '-o', self.temp_audio_file, self.video_url
                    ]
         subprocess.run(yt_dlp_cmd, check=True)
 
         ffmpeg_cmd = [
-        'ffmpeg', '-i', temp_audio_file, '-vn',
-        '-acodec', 'libmp3lame' if output_format == 'mp3' else 'aac',
-        '-ar', '44100', '-ab', '192k', '-f', output_format, output_file
+        'ffmpeg', '-i', self.temp_audio_file, '-vn',
+        '-acodec', 'libmp3lame' if self.output_format == 'mp3' else 'aac',
+        '-ar', '44100', '-ab', '192k', '-f', self.output_format, self.audio_name
             ]
         subprocess.run(ffmpeg_cmd, check=True)
 
-        os.remove(temp_audio_file)
+        os.remove(self.temp_audio_file)
 
 
-
-    def TTS_M(self,audio_name):
-        model=WhisperModel('small',device='cuda',compute_type='float16')
-        segmints=model.transcribe(audio_name,beam_size=5)[0]
+    def TTS_M(self): # tts.TTS_M()
+        segments=self.model.transcribe(self.audio_name, beam_size=5)[0]
         s = ""
-        for segmint in segmints :
-            new_line=f"[{segmint.start:.2f} - {segmint.end:.2f}]{segmint.text}\n"
+        for segment in segments :
+            new_line=f"[{segment.start:.2f} - {segment.end:.2f}]{segment.text}\n"
             s+= new_line
-            # print(new_line,end="")
-        # text_file = open("Text.txt", "w")
-        # text_file.write(s)
-        # text_file.close()
-        return s 
+        return s
+    
+    def run_all(self): # tts.run_all()
+        self.check_video()
+        self.extract_audio()
+        return self.TTS_M()
+
+    def __str__(self):
+        return f"Video URL: {self.video_url}\nAudio File: {self.audio_name}\nOutput Format: {self.output_format}"
 
 
 
 video_url = input(" put your URL : ")
 tts = TTS(video_url)
-print(tts) 
-output_file = "extracted_audio.mp3"
-tts.extract_audio(output_file, output_format='mp3')
+Transcript = tts.run_all()
+File = open("Transcript.txt", "w")
+File.write(Transcript)
+File.close()
+print(Transcript)

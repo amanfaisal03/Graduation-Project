@@ -24,21 +24,23 @@ if __name__ == "__main__":
     
     # Test Phase 2: LLM Class
     text_file = open("LLM.txt", "w")
+
     model = "meta-llama/llama-4-scout-17b-16e-instruct"
     Groq_key = "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"
     llm = Full_LLM(model=model, api_key=Groq_key, Text=The_text, Online=True)
     summary = llm.Summarize()
-    print("The Summary :\n",summary)
+    print("The Summary :\n",summary);text_file.write("The Summary :\n"+summary)
     keywords = llm.Keywords()
-    print("\nThe Keywords: \n",keywords)
+    print("\nThe Keywords: \n",keywords);text_file.write("\nThe Keywords: \n"+keywords)
     Summary_Keywords = llm.Summarize_Keywords()
-    print("\nSummrize & Keywords:\n",Summary_Keywords)
+    print("\nSummrize & Keywords:\n",Summary_Keywords);text_file.write("\nSummrize & Keywords:\n"+Summary_Keywords)
     Transcript = llm.Transcript() # the input text for TTS
-    print("\nThe Transcript:\n",Transcript)
+    print("\nThe Transcript:\n",Transcript);text_file.write("\nThe Transcript:\n"+Transcript)
     Question_Answers = llm.Questions_Answers()
-    print("\nQuestions & Answers:\n",Question_Answers)
-    ChatBot_Answer = llm.ChatBot_Answer(question="What is the main topic of the text?")
-    print("\nChatBot Answer:\n",ChatBot_Answer)
+    print("\nQuestions & Answers:\n",Question_Answers);text_file.write("\nQuestions & Answers:\n"+Question_Answers)
+    Question = "What is the main topic of the text?" # Example question, This should be user input
+    ChatBot_Answer = llm.ChatBot_Answer(question=Question)
+    print("\nChatBot Answer:\n",ChatBot_Answer);text_file.write("\nChatBot Answer:\n"+ChatBot_Answer)
     text_file.close()
     #print(llm)
 

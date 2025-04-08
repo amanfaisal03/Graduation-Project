@@ -14,7 +14,7 @@ if __name__ == "__main__":
     tts = TTS(video_url)
     The_text = tts.run_all()
     File = open("Transcript.txt", "w")
-    File.writelines(The_text)
+    File.write(The_text)
     File.close()
     print(The_text)
 

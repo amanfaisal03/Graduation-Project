@@ -23,17 +23,24 @@ if __name__ == "__main__":
     text_file.close()
     
     # Test Phase 2: LLM Class
+    text_file = open("LLM.txt", "w")
     model = "meta-llama/llama-4-scout-17b-16e-instruct"
     Groq_key = "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"
     llm = Full_LLM(model=model, api_key=Groq_key, Text=The_text, Online=True)
-    print(,llm.Summarize())
-    print(llm.Keywords())
-    print(llm.Summarize_Keywords())
+    summary = llm.Summarize()
+    print("The Summary :\n",summary)
+    keywords = llm.Keywords()
+    print("\nThe Keywords: \n",keywords)
+    Summary_Keywords = llm.Summarize_Keywords()
+    print("\nSummrize & Keywords:\n",Summary_Keywords)
     Transcript = llm.Transcript() # the input text for TTS
-    print(Transcript)
-    print(llm.Questions_Answers())
-    print(llm.ChatBot_Answer(question="What is the main topic of the text?"))
-    print(llm)
+    print("\nThe Transcript:\n",Transcript)
+    Question_Answers = llm.Questions_Answers()
+    print("\nQuestions & Answers:\n",Question_Answers)
+    ChatBot_Answer = llm.ChatBot_Answer(question="What is the main topic of the text?")
+    print("\nChatBot Answer:\n",ChatBot_Answer)
+    text_file.close()
+    #print(llm)
 
     #Test Phase 3: Text to Speech (TTS)
     # 

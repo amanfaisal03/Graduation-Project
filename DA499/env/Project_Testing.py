@@ -1,6 +1,8 @@
 #here we will test our project, pipline and parts of it.
 from Extract_Voice_and_STT_Aman.STT import *
 from LLM_Saad.LLM_Online import *
+from TTS_and_Voice_Merge_Sayyed.TTS import *
+from TTS_and_Voice_Merge_Sayyed.Voice_Merging import *
 import yt_dlp
 import ffmpeg
 import subprocess
@@ -9,7 +11,9 @@ from faster_whisper import WhisperModel
 
 if __name__ == "__main__":
 
-    # Test Phase 1: Extract Voice and STT
+    """
+    Test Phase 1: Extract Voice and STT
+    """
     video_url = input(" put your URL : ") #Video Link: https://www.youtube.com/watch?v=6M5VXKLf4D4
     tts = TTS(video_url)
     tts_text = tts.run_all()
@@ -22,7 +26,9 @@ if __name__ == "__main__":
     The_text = file.read()
     file.close()
 
-    # Test Phase 2: LLM Class
+    """
+    Test Phase 2: LLM Class
+    """
     text_file = open(r"LLM.txt", "w", encoding="utf-8") 
     # encoding="utf-8" is important for Arabic text to be saved correctly without any errors
 
@@ -58,5 +64,7 @@ if __name__ == "__main__":
     text_file.close()
     #print(llm)
 
-    #Test Phase 3: Text to Speech (TTS)
+    """
+    Test Phase 3: Text to Speech (TTS)
+    """
     # 

@@ -11,6 +11,8 @@ class TTS():
         self.audio_name="audio.mp3"
         self.output_format='mp3'
         self.temp_audio_file = "temp_audio.m4a"
+        self.video_name="video.mp4"
+        self.video_format='mp4'
         self.model = WhisperModel('small',device='cpu')#device='cuda',compute_type='float16')
         self.check_video()
         
@@ -35,7 +37,20 @@ class TTS():
         except yt_dlp.utils.DownloadError:
              #return {"status": "Not Available", "message": "Video not found or restricted."}
              raise ValueError("Video not found or restricted.")
+    
 
+    def download_video(self):
+
+        ydl_opts = {
+            'format': self.video_format,
+            'outtmpl': self.video_name , 
+            'noplaylist': True,
+            'quiet': False,
+            'no_warnings': True
+        }
+
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([self.video_url])
 
     def extract_audio(self): # tts.extract_audio()
 
@@ -67,8 +82,9 @@ class TTS():
     
     def run_all(self): # tts.run_all()
         self.check_video()
+        self.download_video()
         self.extract_audio()
         return self.STT_M()
 
     def __str__(self):
-        return f"Video URL: {self.video_url}\nAudio File: {self.audio_name}\nOutput Format: {self.output_format}"
+        return f"Video URL: {self.video_url}\n video File : {self.video_name} \n Audio File: {self.audio_name}\nOutput Format: {self.output_format}"

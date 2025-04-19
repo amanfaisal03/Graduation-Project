@@ -5,7 +5,7 @@ video = mp.VideoFileClip("C:\\Users\\sauui\\Downloads\\Deep Learning _ What is D
 
 # إزالة الصوت
 silent_video = video.without_audio()
-
+    
 # حفظ الفيديو الجديد
 silent_video.write_videofile("silent_video.mp4", codec="libx264", audio_codec="aac")
 

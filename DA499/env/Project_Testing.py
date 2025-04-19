@@ -14,6 +14,7 @@ if __name__ == "__main__":
     """
     Test Phase 1: Extract Voice and STT
     """
+    # New Test 42 seconed video : https://www.youtube.com/shorts/5xp0taGM3Kg
     video_url = input(" put your URL : ") #Video Link: https://www.youtube.com/watch?v=6M5VXKLf4D4
     tts = TTS(video_url)
     tts_text = tts.run_all()

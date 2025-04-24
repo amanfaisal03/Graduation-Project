@@ -15,9 +15,11 @@ from pydub.silence import split_on_silence  # لتحديد وقص فترات ا�
 from scipy.io.wavfile import read, write    # لقراءة وكتابة ملفات الصوت بصيغة WAV
 
 
-
-#هاي عشان نعمل دالة لاستخراج التوقيتات والنص وننشئ عامود باسماء الفويسات    
 def Extract_text_and_time(file_path, output_csv):       
+    """
+    هاي عشان نعمل دالة لاستخراج التوقيتات والنص وننشئ عامود باسماء الفويسات    
+    """
+
     results = []                                                                           # قائمة لتخزين النتائج
     with open(file_path, "r", encoding="utf-8") as file:                                   # فتح الملف
         lines = file.readlines()                                                           # قراءة كل الأسطر في الملف 
@@ -55,11 +57,11 @@ def Extract_text_and_time(file_path, output_csv):
 
     print(" تم استخراج البيانات وحفظها في timing_sentences_.csv")                         #الحمدلله 
 
-
-
-
-#  CSV يهون بنعمل فنكشن لتوليد الصوت عن طريق قراءة ملف 
 def Generate_audio(csv_path, out_put_path, voice_file, language="ar"):                     
+    """
+    CSV يهون بنعمل فنكشن لتوليد الصوت عن طريق قراءة ملف 
+    """
+    
     device = "cuda" if torch.cuda.is_available() else "cpu"                                    # بنشوف اذا في gpu او لا 
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)                      #بنزل المودل وبنجهزه ياغالي 
 
@@ -83,8 +85,6 @@ def Generate_audio(csv_path, out_put_path, voice_file, language="ar"):
             save_path = os.path.join(out_put_path, filename)                                  #بنسوي مسار للملف يلي رح نخزنه حسب اسم الفويس يلي مخزن بالكولم 
             sf.write(save_path, audio, 24000)                                                 #  بنخزن الصوت يلي طلع من المودل باستخدام soundfile بترردد 2400 هرتز 
     print("✅ تم توليد كل ملفات الصوت بنجاح")
-
-
 
 #بنجيب ملف csv كمان مرة وبنحط فيه كل الملفات يلي بدنا نحذف منها السايلنس 
 def Delete_silence_from_voices(csv_path, input_folder, output_folder):                       
@@ -198,20 +198,20 @@ def Merge_audio_with_video(video_path, audio_path, final_output_path):
 #هاي المين تبع كلشي يا غالي 
 def Start_the_operation():
     start_time = time.time()    #هاي بس عشان احسب مدة تنفيذ الكود 
-
+    csv_path = r"timing_sentences_.csv"  # مسار ملف CSV
     Extract_text_and_time(
         r"C:\Users\sauui\XTTS-project\sayyid-work\test-text\نص-التجربة.txt",
-        "timing_sentences_.csv"
+        csv_path
     )
 
     Generate_audio(
-        "C:\\Users\\sauui\\XTTS-project\\timing_sentences_.csv",
-        "C:\\Users\\sauui\\XTTS-project\\sayyid-work\\output-test-voice\\original-video-voice",
+        csv_path,
+        "output-test-voice\\original-video-voice",
         r"C:\Users\sauui\XTTS-project\sayyid-work\input-test-voice\غرباء.wav"
     )
 
     Delete_silence_from_voices(
-        r"C:\Users\sauui\XTTS-project\timing_sentences_.csv",
+        csv_path,
         r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\original-video-voice",
         r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\removed-voices"
     )
@@ -235,7 +235,3 @@ def Start_the_operation():
 
     end_time = time.time()
     print(f" الوقت المستغرق: {end_time - start_time:.2f} ثانية")
-
-#بلشلي المشروع اول ما تعمل رن 
-if __name__ == "__main__":
-    Start_the_operation()

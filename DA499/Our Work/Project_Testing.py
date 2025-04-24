@@ -1,8 +1,7 @@
 #here we will test our project, pipline and parts of it.
 from Extract_Voice_and_STT_Aman.STT import *
 from LLM_Saad.LLM_Online import *
-from TTS_and_Voice_Merge_Sayyed.TTS import *
-from TTS_and_Voice_Merge_Sayyed.Voice_Merging import *
+from TTS_Merging_Sayyid.FullCleanCode import *
 import yt_dlp
 import ffmpeg
 import subprocess
@@ -13,15 +12,17 @@ if __name__ == "__main__":
 
     """
     Test Phase 1: Extract Voice and STT
+    # GET --> URL
+    # POST --> Checking URL ||  POST --> Start working
     """
     # New Test 42 seconed video : https://www.youtube.com/shorts/5xp0taGM3Kg
-    video_url = input(" put your URL : ") #Video Link: https://www.youtube.com/watch?v=6M5VXKLf4D4
+    video_url = input(" put your URL : ") #Video Link: https://www.youtube.com/watch?v=6M5VXKLf4D4 
     tts = TTS(video_url)
-    tts_text = tts.run_all()
+    tts_text = tts.run_all() 
     File = open("Transcript.txt", "w")
     File.write(tts_text)
     File.close()
-    print(tts_text)
+    print(tts_text) 
 
     file = open(r"Transcript.txt", "r")
     The_text = file.read()
@@ -29,6 +30,7 @@ if __name__ == "__main__":
 
     """
     Test Phase 2: LLM Class
+    POST --> Keywords ||  POST --> Summary ||  POST --> Questions & Answers ||  GET & POST --> ChatBot Questoins & Answers
     """
     text_file = open(r"LLM.txt", "w", encoding="utf-8") 
     # encoding="utf-8" is important for Arabic text to be saved correctly without any errors
@@ -38,28 +40,22 @@ if __name__ == "__main__":
     llm = Full_LLM(model=model, api_key=Groq_key, Text=The_text, Online=True)
 
     summary = llm.Summarize()
-    print("The Summary :\n", summary)
     text_file.write("The Summary:\n" + summary + "\n")
 
     keywords = llm.Keywords()
-    print("\nThe Keywords: \n", keywords)
     text_file.write("\nThe Keywords:\n" + keywords + "\n")
 
     Summary_Keywords = llm.Summarize_Keywords()
-    print("\nSummrize & Keywords:\n", Summary_Keywords)
     text_file.write("\nSummrize & Keywords:\n" + Summary_Keywords + "\n")
 
     Transcript = llm.Transcript()  # the input text for TTS
-    print("\nThe Transcript:\n", Transcript)
     text_file.write("\nThe Transcript:\n" + Transcript + "\n")
 
     Question_Answers = llm.Questions_Answers()
-    print("\nQuestions & Answers:\n", Question_Answers)
     text_file.write("\nQuestions & Answers:\n" + Question_Answers + "\n")
 
     Question = "يخوي شو هو الموظوع تبع الفيديو"  # Example question, This should be user input
     ChatBot_Answer = llm.ChatBot_Answer(question=Question)
-    print("\nChatBot Answer:\n", ChatBot_Answer)
     text_file.write("\nChatBot Answer:\n" + ChatBot_Answer)
 
     text_file.close()
@@ -67,5 +63,7 @@ if __name__ == "__main__":
 
     """
     Test Phase 3: Text to Speech (TTS)
+    # POST --> Merged Video
     """
-    # sayed work
+    # sayyid work
+    

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دبلجلي - الترجمة والدبلجة الفورية للفيديوهات التعليمية</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon">د</div>
+        <span>دبلجلي</span>
+      </div>
+      
+      <nav>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#">المكتبة</a></li>
+          <li><a href="#">كيف يعمل</a></li>
+          <li><a href="#">الأسعار</a></li>
+        </ul>
+      </nav>
+      
+      <div class="auth-buttons">
+        <button class="btn-outline">تسجيل الدخول</button>
+        <button class="btn-primary">إنشاء حساب</button>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <section class="hero">
+        <h1>تعلم بدون حواجز لغوية</h1>
+        <p>دبلجلي تقوم بترجمة ودبلجة الفيديوهات التعليمية إلى اللغة العربية، مما يساعد طلاب الجامعات على الوصول إلى المعرفة دون قيود اللغة.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary btn-hero">ابدأ الآن</button>
+          <button class="btn-outline btn-hero">كيف يعمل</button>
+        </div>
+      </section>
+      
+      <section class="dashboard">
+        <div class="main-panel">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">رفع الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="upload-area">
+                <div class="upload-icon">↑</div>
+                <h3>اسحب وأفلت ملف الفيديو</h3>
+                <p class="upload-text">أو انقر لتصفح الملفات (MP4, MKV, MOV حتى 1 جيجابايت)</p>
+                <button class="btn-primary">اختيار ملف</button>
+              </div>
+              
+              <div class="url-input">
+                <p>أو الصق رابط من يوتيوب أو منصة تعليمية</p>
+                <div class="input-group">
+                  <input type="text" placeholder="https://www.youtube.com/watch?v=...">
+                  <button class="btn-primary">معالجة</button>
+                </div>
+              </div>
+              
+              <div class="progress-container">
+                <div class="progress-title">
+                  <span>جاري معالجة الفيديو...</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">مشغل الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="video-player">
+                <!-- Video player placeholder -->
+                <img src="/api/placeholder/800/450" alt="مكان مشغل الفيديو" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              
+              <div class="video-controls">
+                <div class="subtitles">
+                  <button class="subtitle-btn">الإنجليزية</button>
+                  <button class="subtitle-btn active">العربية</button>
+                  <button class="subtitle-btn">مزدوج</button>
+                </div>
+                
+                <div class="video-actions">
+                  <button class="video-btn">⏬ تنزيل</button>
+                  <button class="video-btn">📋 ملخص</button>
+                  <button class="video-btn">📝 اختبار</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">المساعد الذكي</h2>
+            </div>
+            <div class="card-content">
+              <div class="chat-interface">
+                <div class="chat-messages">
+                  <div class="message ai-message">
+                    مرحباً! أنا مساعدك التعليمي الذكي. اسألني أي سؤال حول محتوى الفيديو.
+                  </div>
+                  <div class="message user-message">
+                    هل يمكنك شرح مفهوم تعلم الآلة بطريقة مبسطة؟
+                  </div>
+                  <div class="message ai-message">
+                    بالتأكيد! تعلم الآلة هو طريقة تتعلم بها أجهزة الكمبيوتر أنماطاً من البيانات دون برمجة صريحة. إنه مثل تعليم الكمبيوتر التعرف على القطط من خلال إظهار آلاف صور القطط بدلاً من كتابة قواعد محددة.
+                  </div>
+                </div>
+                
+                <div class="chat-input">
+                  <input type="text" placeholder="اسأل سؤالاً حول محتوى الفيديو..." style="flex: 1;">
+                  <button class="btn-primary">إرسال</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">المصطلحات الأساسية</h2>
+            </div>
+            <div class="card-content" style="padding: 0;">
+              <div class="terminology-list">
+                <div class="terminology-item">
+                  <div class="term-english">Deep Learning</div>
+                  <div class="term-arabic">التعلم العميق</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Neural Network</div>
+                  <div class="term-arabic">الشبكة العصبية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Algorithm</div>
+                  <div class="term-arabic">الخوارزمية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Computer Vision</div>
+                  <div class="term-arabic">رؤية الحاسوب</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Natural Language Processing</div>
+                  <div class="term-arabic">معالجة اللغة الطبيعية</div>
+                </div>
+              </div>
+              
+              <div class="terminology-details">
+                <div class="term-details-header">
+                  <div class="term-details-title">Neural Network</div>
+                  <button class="btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">حفظ المصطلح</button>
+                </div>
+                <div class="term-details-content">
+                  الشبكة العصبية هي نموذج حسابي مستوحى من الدماغ البشري. تتكون من عقد متصلة (خلايا عصبية) تعالج وتنقل المعلومات. تشكل الشبكات العصبية أساس العديد من أنظمة الذكاء الاصطناعي الحديثة.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">ملخص الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <p style="line-height: 1.6; color: var(--gray);">
+                تقدم هذه المحاضرة المفاهيم الأساسية لتعلم الآلة وتطبيقاتها. المواضيع الرئيسية التي تمت تغطيتها تشمل:
+              </p>
+              <ul style="margin-top: 1rem; margin-right: 1.5rem; color: var(--gray); line-height: 1.6;">
+                <li>أنواع أساليب تعلم الآلة</li>
+                <li>التعلم الخاضع للإشراف مقابل التعلم غير الخاضع للإشراف</li>
+                <li>الشبكات العصبية والتعلم العميق</li>
+                <li>تطبيقات واقعية في الرعاية الصحية والتعليم</li>
+                <li>الاعتبارات الأخلاقية في تطوير الذكاء الاصطناعي</li>
+              </ul>
+              <button class="btn-primary" style="margin-top: 1.5rem; width: 100%;">إنشاء ملاحظات مفصلة</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+<!-- Add this at the end of the body tag -->
+<script>
+  // Get CSRF token for Django
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie('csrftoken');
+  
+  // Current video ID
+  let currentVideoId = null;
+
+  // Process video URL
+  document.querySelector('.input-group button').addEventListener('click', async function() {
+    const urlInput = document.querySelector('.input-group input');
+    const videoUrl = urlInput.value.trim();
+    
+    if (!videoUrl) {
+      alert('الرجاء إدخال رابط فيديو صالح');
+      return;
+    }
+    
+    // Show progress
+    document.querySelector('.progress-container').style.display = 'block';
+    
+    try {
+      const response = await fetch('/api/videos/process/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ url: videoUrl })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        currentVideoId = data.video.id;
+        // Update video player (placeholder for now)
+        document.querySelector('.video-player').innerHTML = `
+          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000;">
+            <p style="color: white;">تم معالجة الفيديو بنجاح</p>
+          </div>
+        `;
+        
+        // Now request summary and keywords
+        generateSummary(currentVideoId);
+        generateKeywords(currentVideoId);
+      } else {
+        alert('حدث خطأ: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('حدث خطأ في معالجة الفيديو');
+    } finally {
+      // Hide progress
+      document.querySelector('.progress-container').style.display = 'none';
+    }
+  });
+
+  // Generate summary
+  async function generateSummary(videoId) {
+    try {
+      const response = await fetch(`/api/videos/${videoId}/summary/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Update summary section
+        document.querySelector('.card-content p').textContent = data.summary.substring(0, 150) + '...';
+      }
+    } catch (error) {
+      console.error('Error generating summary:', error);
+    }
+  }
+
+  // Generate keywords
+  async function generateKeywords(videoId) {
+    try {
+      const response = await fetch(`/api/videos/${videoId}/keywords/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Parse keywords and update UI
+        const keywordsArray = data.keywords.split(',');
+        const keywordsList = document.querySelector('.terminology-list');
+        keywordsList.innerHTML = '';
+        
+        keywordsArray.slice(0, 5).forEach(keyword => {
+          const keywordItem = document.createElement('div');
+          keywordItem.className = 'terminology-item';
+          keywordItem.innerHTML = `
+            <div class="term-english">${keyword.trim()}</div>
+            <div class="term-arabic">${keyword.trim()}</div>
+          `;
+          keywordsList.appendChild(keywordItem);
+        });
+      }
+    } catch (error) {
+      console.error('Error generating keywords:', error);
+    }
+  }
+
+  // Ask question
+  document.querySelector('.chat-input button').addEventListener('click', async function() {
+    if (!currentVideoId) {
+      alert('الرجاء معالجة فيديو أولاً');
+      return;
+    }
+    
+    const questionInput = document.querySelector('.chat-input input');
+    const question = questionInput.value.trim();
+    
+    if (!question) {
+      alert('الرجاء إدخال سؤال');
+      return;
+    }
+    
+    // Add user message to chat
+    const chatMessages = document.querySelector('.chat-messages');
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'message user-message';
+    userMessageDiv.textContent = question;
+    chatMessages.appendChild(userMessageDiv);
+    
+    // Clear input
+    questionInput.value = '';
+    
+    try {
+      const response = await fetch(`/api/videos/${currentVideoId}/ask/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ question: question })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Add AI response to chat
+        const aiMessageDiv = document.createElement('div');
+        aiMessageDiv.className = 'message ai-message';
+        aiMessageDiv.textContent = data.answer;
+        chatMessages.appendChild(aiMessageDiv);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } else {
+        alert('حدث خطأ: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error asking question:', error);
+      alert('حدث خطأ في معالجة السؤال');
+    }
+  });
+</script>
+</html>

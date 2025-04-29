@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+  {% load static %}
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>دبلجلي - الترجمة والدبلجة الفورية للفيديوهات التعليمية</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
   <header>
@@ -286,9 +287,9 @@
   }
 
   // Generate keywords
-  async function generateKeywords(videoId) {
+  async function generateSummary(videoId) {
     try {
-      const response = await fetch(`/api/videos/${videoId}/keywords/`, {
+      const response = await fetch(`/api/videos/${videoId}/summary/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -297,27 +298,20 @@
       });
       
       const data = await response.json();
+    
+    if (response.ok) {
+      // Update summary section with a more specific selector
+      const summaryCard = document.querySelector('.sidebar .card:nth-child(2)');
+      const summaryParagraph = summaryCard.querySelector('.card-content p');
       
-      if (response.ok) {
-        // Parse keywords and update UI
-        const keywordsArray = data.keywords.split(',');
-        const keywordsList = document.querySelector('.terminology-list');
-        keywordsList.innerHTML = '';
-        
-        keywordsArray.slice(0, 5).forEach(keyword => {
-          const keywordItem = document.createElement('div');
-          keywordItem.className = 'terminology-item';
-          keywordItem.innerHTML = `
-            <div class="term-english">${keyword.trim()}</div>
-            <div class="term-arabic">${keyword.trim()}</div>
-          `;
-          keywordsList.appendChild(keywordItem);
-        });
+      if (summaryParagraph) {
+        summaryParagraph.textContent = data.summary.substring(0, 150) + '...';
       }
-    } catch (error) {
-      console.error('Error generating keywords:', error);
     }
+  } catch (error) {
+    console.error('Error generating summary:', error);
   }
+}
 
   // Ask question
   document.querySelector('.chat-input button').addEventListener('click', async function() {

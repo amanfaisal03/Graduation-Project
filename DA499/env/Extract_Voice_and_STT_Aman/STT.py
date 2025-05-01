@@ -87,4 +87,4 @@ class TTS():
         return self.STT_M()
 
     def __str__(self):
-        return f"Video URL: {self.video_url}\n video File : {self.video_name} \n Audio File: {self.audio_name}\nOutput Format: {self.output_format}"
+        return f"Video URL: {self.video_url}\n video File : {self.video_name} \n Audio File: {self.audio_name}\nOutput Format: {self.output_format}" 

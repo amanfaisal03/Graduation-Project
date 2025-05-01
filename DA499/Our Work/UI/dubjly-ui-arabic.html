@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دبلجلي - الترجمة والدبلجة الفورية للفيديوهات التعليمية</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon">د</div>
+        <span>دبلجلي</span>
+      </div>
+      
+      <nav>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#">المكتبة</a></li>
+          <li><a href="#">كيف يعمل</a></li>
+          <li><a href="#">الأسعار</a></li>
+        </ul>
+      </nav>
+      
+      <div class="auth-buttons">
+        <button class="btn-outline">تسجيل الدخول</button>
+        <button class="btn-primary">إنشاء حساب</button>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <section class="hero">
+        <h1>تعلم بدون حواجز لغوية</h1>
+        <p>دبلجلي تقوم بترجمة ودبلجة الفيديوهات التعليمية إلى اللغة العربية، مما يساعد طلاب الجامعات على الوصول إلى المعرفة دون قيود اللغة.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary btn-hero">ابدأ الآن</button>
+          <button class="btn-outline btn-hero">كيف يعمل</button>
+        </div>
+      </section>
+      
+      <section class="dashboard">
+        <div class="main-panel">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">رفع الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="upload-area">
+                <div class="upload-icon">↑</div>
+                <h3>اسحب وأفلت ملف الفيديو</h3>
+                <p class="upload-text">أو انقر لتصفح الملفات (MP4, MKV, MOV حتى 1 جيجابايت)</p>
+                <button class="btn-primary">اختيار ملف</button>
+              </div>
+              
+              <div class="url-input">
+                <p>أو الصق رابط من يوتيوب أو منصة تعليمية</p>
+                <div class="input-group">
+                  <input type="text" placeholder="https://www.youtube.com/watch?v=...">
+                  <button class="btn-primary">معالجة</button>
+                </div>
+              </div>
+              
+              <div class="progress-container">
+                <div class="progress-title">
+                  <span>جاري معالجة الفيديو...</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">مشغل الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <div class="video-player">
+                <!-- Video player placeholder -->
+                <img src="/api/placeholder/800/450" alt="مكان مشغل الفيديو" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              
+              <div class="video-controls">
+                <div class="subtitles">
+                  <button class="subtitle-btn">الإنجليزية</button>
+                  <button class="subtitle-btn active">العربية</button>
+                  <button class="subtitle-btn">مزدوج</button>
+                </div>
+                
+                <div class="video-actions">
+                  <button class="video-btn">⏬ تنزيل</button>
+                  <button class="video-btn">📋 ملخص</button>
+                  <button class="video-btn">📝 اختبار</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">المساعد الذكي</h2>
+            </div>
+            <div class="card-content">
+              <div class="chat-interface">
+                <div class="chat-messages">
+                  <div class="message ai-message">
+                    مرحباً! أنا مساعدك التعليمي الذكي. اسألني أي سؤال حول محتوى الفيديو.
+                  </div>
+                  <div class="message user-message">
+                    هل يمكنك شرح مفهوم تعلم الآلة بطريقة مبسطة؟
+                  </div>
+                  <div class="message ai-message">
+                    بالتأكيد! تعلم الآلة هو طريقة تتعلم بها أجهزة الكمبيوتر أنماطاً من البيانات دون برمجة صريحة. إنه مثل تعليم الكمبيوتر التعرف على القطط من خلال إظهار آلاف صور القطط بدلاً من كتابة قواعد محددة.
+                  </div>
+                </div>
+                
+                <div class="chat-input">
+                  <input type="text" placeholder="اسأل سؤالاً حول محتوى الفيديو..." style="flex: 1;">
+                  <button class="btn-primary">إرسال</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">المصطلحات الأساسية</h2>
+            </div>
+            <div class="card-content" style="padding: 0;">
+              <div class="terminology-list">
+                <div class="terminology-item">
+                  <div class="term-english">Deep Learning</div>
+                  <div class="term-arabic">التعلم العميق</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Neural Network</div>
+                  <div class="term-arabic">الشبكة العصبية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Algorithm</div>
+                  <div class="term-arabic">الخوارزمية</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Computer Vision</div>
+                  <div class="term-arabic">رؤية الحاسوب</div>
+                </div>
+                <div class="terminology-item">
+                  <div class="term-english">Natural Language Processing</div>
+                  <div class="term-arabic">معالجة اللغة الطبيعية</div>
+                </div>
+              </div>
+              
+              <div class="terminology-details">
+                <div class="term-details-header">
+                  <div class="term-details-title">Neural Network</div>
+                  <button class="btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">حفظ المصطلح</button>
+                </div>
+                <div class="term-details-content">
+                  الشبكة العصبية هي نموذج حسابي مستوحى من الدماغ البشري. تتكون من عقد متصلة (خلايا عصبية) تعالج وتنقل المعلومات. تشكل الشبكات العصبية أساس العديد من أنظمة الذكاء الاصطناعي الحديثة.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">ملخص الفيديو</h2>
+            </div>
+            <div class="card-content">
+              <p style="line-height: 1.6; color: var(--gray);">
+                تقدم هذه المحاضرة المفاهيم الأساسية لتعلم الآلة وتطبيقاتها. المواضيع الرئيسية التي تمت تغطيتها تشمل:
+              </p>
+              <ul style="margin-top: 1rem; margin-right: 1.5rem; color: var(--gray); line-height: 1.6;">
+                <li>أنواع أساليب تعلم الآلة</li>
+                <li>التعلم الخاضع للإشراف مقابل التعلم غير الخاضع للإشراف</li>
+                <li>الشبكات العصبية والتعلم العميق</li>
+                <li>تطبيقات واقعية في الرعاية الصحية والتعليم</li>
+                <li>الاعتبارات الأخلاقية في تطوير الذكاء الاصطناعي</li>
+              </ul>
+              <button class="btn-primary" style="margin-top: 1.5rem; width: 100%;">إنشاء ملاحظات مفصلة</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

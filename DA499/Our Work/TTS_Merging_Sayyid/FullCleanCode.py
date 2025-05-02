@@ -56,7 +56,15 @@ def Extract_text_and_time(file_path, output_csv):
         writer.writerows(results)                                                           # هون بنكتب كل النتائج في ملف CSV 
 
     print(" تم استخراج البيانات وحفظها في timing_sentences_.csv")                         #الحمدلله 
+<<<<<<< HEAD:DA499/Our Work/TTS_Merging_Sayyid/FullCleanCode.py
 
+=======
+    return 
+
+
+
+#  CSV يهون بنعمل فنكشن لتوليد الصوت عن طريق قراءة ملف 
+>>>>>>> 57d8fed8edcab560a4fb9aab01f7181743fc1c1c:DA499/env/sayyid-work/python-scripts/Full_codes/Full-clean-code.py
 def Generate_audio(csv_path, out_put_path, voice_file, language="ar"):                     
     """
     CSV يهون بنعمل فنكشن لتوليد الصوت عن طريق قراءة ملف 
@@ -197,6 +205,7 @@ def Merge_audio_with_video(video_path, audio_path, final_output_path):
 
 #هاي المين تبع كلشي يا غالي 
 def Start_the_operation():
+<<<<<<< HEAD:DA499/Our Work/TTS_Merging_Sayyid/FullCleanCode.py
     start_time = time.time()    #هاي بس عشان احسب مدة تنفيذ الكود 
     csv_path = r"timing_sentences_.csv"  # مسار ملف CSV
     Extract_text_and_time(
@@ -215,23 +224,63 @@ def Start_the_operation():
         r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\original-video-voice",
         r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\removed-voices"
     )
+=======
+    import os
+    import time
 
-    Merge_voices_in_one_voice(
-        r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\removed-voices",
-        r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\merged_output.wav"
-    )
+    # 🟢 جذر المشروع
+    BASE_DIR = os.path.join("C:\\Users\\sauui\\XTTS-project", "Graduation-Project", "DA499", "env")
 
-    Optimize_speed_to_match_video(
-        r"C:\Users\sauui\XTTS-project\silent_video.mp4",
-        r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\merged_output.wav",
-        r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\merged_output_adjusted.wav"
-    )
+    # 📁 المسارات المهمة
+    TEXT_INPUT = os.path.join(BASE_DIR, "sayyid-work", "test-text", "نص-التجربة.txt")
+    CSV_PATH = os.path.join(BASE_DIR, "sayyid-work", "video_and_csv", "timing_sentences_.csv")
+    VOICE_SAMPLE = os.path.join(BASE_DIR, "sayyid-work", "input-test-voice", "غرباء.wav")
+    ORIGINAL_AUDIO_FOLDER = os.path.join(BASE_DIR, "sayyid-work", "output-test-voice", "original-video-voice")
+    CLEANED_AUDIO_FOLDER = os.path.join(BASE_DIR, "sayyid-work", "output-test-voice", "removed-voices")
+    MERGED_AUDIO = os.path.join(BASE_DIR, "sayyid-work", "output-test-voice", "merged_output.wav")
+    ADJUSTED_AUDIO = os.path.join(BASE_DIR, "sayyid-work", "output-test-voice", "merged_output_adjusted.wav")
+    VIDEO_INPUT = os.path.join(BASE_DIR, "sayyid-work", "video_and_csv", "silent_video.mp4")
+    FINAL_VIDEO = os.path.join(BASE_DIR, "final-video.mp4")
 
-    Merge_audio_with_video(
-        r"C:\Users\sauui\XTTS-project\silent_video.mp4",
-        r"C:\Users\sauui\XTTS-project\sayyid-work\output-test-voice\merged_output_adjusted.wav",
-        r"C:\Users\sauui\XTTS-project\final-video-synced.mp4"
-    )
+    # 📂 إنشاء المجلدات إذا غير موجودة
+    os.makedirs(os.path.dirname(CSV_PATH), exist_ok=True)
+    os.makedirs(ORIGINAL_AUDIO_FOLDER, exist_ok=True)
+    os.makedirs(CLEANED_AUDIO_FOLDER, exist_ok=True)
+    os.makedirs(os.path.dirname(MERGED_AUDIO), exist_ok=True)
+    os.makedirs(os.path.dirname(ADJUSTED_AUDIO), exist_ok=True)
+    os.makedirs(os.path.dirname(FINAL_VIDEO), exist_ok=True)
+>>>>>>> 57d8fed8edcab560a4fb9aab01f7181743fc1c1c:DA499/env/sayyid-work/python-scripts/Full_codes/Full-clean-code.py
 
+    # 🕒 بدء المؤقت
+    start_time = time.time()
+
+    # 1️⃣ استخراج التوقيت والنص
+    Extract_text_and_time(TEXT_INPUT, CSV_PATH)
+
+    # 2️⃣ توليد الصوت
+    Generate_audio(CSV_PATH, ORIGINAL_AUDIO_FOLDER, VOICE_SAMPLE)
+
+    # 3️⃣ حذف السكوت
+    Delete_silence_from_voices(CSV_PATH, ORIGINAL_AUDIO_FOLDER, CLEANED_AUDIO_FOLDER)
+
+    # 4️⃣ دمج المقاطع الصوتية
+    Merge_voices_in_one_voice(CLEANED_AUDIO_FOLDER, MERGED_AUDIO)
+
+    # 5️⃣ تعديل السرعة
+    Optimize_speed_to_match_video(VIDEO_INPUT, MERGED_AUDIO, ADJUSTED_AUDIO)
+
+    # 6️⃣ دمج الصوت المعدل مع الفيديو
+    Merge_audio_with_video(VIDEO_INPUT, ADJUSTED_AUDIO, FINAL_VIDEO)
+
+    # ⏱️ نهاية المؤقت
     end_time = time.time()
+<<<<<<< HEAD:DA499/Our Work/TTS_Merging_Sayyid/FullCleanCode.py
     print(f" الوقت المستغرق: {end_time - start_time:.2f} ثانية")
+=======
+    print(f" الوقت المستغرق: {end_time - start_time:.2f} ثانية")
+
+
+#بلشلي المشروع اول ما تعمل رن 
+if __name__ == "__main__":
+    Start_the_operation()
+>>>>>>> 57d8fed8edcab560a4fb9aab01f7181743fc1c1c:DA499/env/sayyid-work/python-scripts/Full_codes/Full-clean-code.py

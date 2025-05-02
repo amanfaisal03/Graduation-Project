@@ -1,13 +1,14 @@
 #here we will test our project, pipline and parts of it.
 from Extract_Voice_and_STT_Aman.STT import *
 from LLM_Saad.LLM_Online import *
-from TTS_and_Voice_Merge_Sayyed.TTS import *
-from TTS_and_Voice_Merge_Sayyed.Voice_Merging import *
+from  Full_codes import *
 import yt_dlp
 import ffmpeg
 import subprocess
 import os
 from faster_whisper import WhisperModel
+from Run_main import Start_the_TTS_process
+import time 
 
 if __name__ == "__main__":
 
@@ -68,4 +69,12 @@ if __name__ == "__main__":
     """
     Test Phase 3: Text to Speech (TTS)
     """
-    # sayed work
+    # sayyid work
+Text_path = r"C:\Users\sauui\XTTS-project\Graduation-Project\DA499\env\sayyid-work\test-text\Main_text.txt"     #هاي المسار تبع النص اللي بدنا نشتغل عليه
+with open(Text_path, "w", encoding="utf-8") as f:
+    f.write(Transcript)  # هذا المتغير جاي من شغل التيم (الـ LLM)
+
+  
+base_path = r"C:\Users\sauui\XTTS-project\Graduation-Project\DA499\env"       #هاظ الباث عشان اذا حدا بده يعمل رن عنده يقدر يغير زي مابده بالمسار الاساسي بحيث يزبط  معه 
+Video = Start_the_TTS_process(base_path, text_input_path=Text_path)
+Video.run()

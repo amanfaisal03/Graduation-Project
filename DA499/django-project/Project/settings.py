@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-(ov6&w+3w8zl((ib#nc7slq2rs=u5nwbthcjub1t6caam$$%*)
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ROOT_URLCONF = 'Project.urls'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 # Add CORS settings to allow frontend requests
@@ -69,6 +72,13 @@ TEMPLATES = [
         },
     },
 ]
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

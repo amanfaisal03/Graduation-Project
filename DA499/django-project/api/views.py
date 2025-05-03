@@ -14,7 +14,7 @@ def check_video(request):
     video_url = request.data.get('url')
     
     if not video_url: # check if user has entered the video link or not (empty)
-        return Response({"error": "Missing video URL"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Missing video URL , plaese input URL video "}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
@@ -26,9 +26,10 @@ def check_video(request):
             if existing_video:
                 serializer = VideoSerializer(existing_video)
                 return Response({
-                    "message": "Video already exists",
+                    "message": "Video already exists ",
                     "video": serializer.data
                 })
+            
             # save in data base 
             video_instance = Video.objects.create(
                 name=title,

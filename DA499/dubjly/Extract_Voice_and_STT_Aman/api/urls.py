@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path('check-video/', views.check_video, name='check_video'),
+    path('getData/',views.gitData,name='gitData'),
 ]

@@ -81,10 +81,13 @@
               <h2 class="card-title">مشغل الفيديو</h2>
             </div>
             <div class="card-content">
-              <div class="video-player">
-                <!-- Video player placeholder -->
-                <img src="/api/placeholder/800/450" alt="مكان مشغل الفيديو" style="width: 100%; height: 100%; object-fit: cover;">
+              <div class="video-player" id="video-player">
+               <video id="dubbed-video" width="100%" height="100%" controls>
+                <source id="dubbed-video-src" src="" type="video/mp4">
+                متصفحك لا يدعم عرض الفيديو.
+               </video>
               </div>
+
               
               <div class="video-controls">
                 <div class="subtitles">
@@ -94,7 +97,8 @@
                 </div>
                 
                 <div class="video-actions">
-                  <button class="video-btn">⏬ تنزيل</button>
+                  <a id="download-btn" class="video-btn" href="#" download>⏬ تنزيل</a>
+
                   <button class="video-btn">📋 ملخص</button>
                   <button class="video-btn">📝 اختبار</button>
                 </div>
@@ -195,7 +199,7 @@
 </body>
 <!-- Add this at the end of the body tag -->
 <script>
-  // Get CSRF token for Django
+  // ✅ تعريف csrf token
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -210,24 +214,23 @@
     }
     return cookieValue;
   }
+
   const csrftoken = getCookie('csrftoken');
-  
-  // Current video ID
   let currentVideoId = null;
 
-  // Process video URL
-  document.querySelector('.input-group button').addEventListener('click', async function() {
+  // ✅ عند الضغط على زر "معالجة"
+  document.querySelector('.input-group button').addEventListener('click', async function () {
     const urlInput = document.querySelector('.input-group input');
     const videoUrl = urlInput.value.trim();
-    
+
     if (!videoUrl) {
       alert('الرجاء إدخال رابط فيديو صالح');
       return;
     }
-    
-    // Show progress
+
+    // Show progress bar
     document.querySelector('.progress-container').style.display = 'block';
-    
+
     try {
       const response = await fetch('/api/videos/process/', {
         method: 'POST',
@@ -237,19 +240,30 @@
         },
         body: JSON.stringify({ url: videoUrl })
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         currentVideoId = data.video.id;
-        // Update video player (placeholder for now)
-        document.querySelector('.video-player').innerHTML = `
-          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000;">
-            <p style="color: white;">تم معالجة الفيديو بنجاح</p>
-          </div>
-        `;
-        
-        // Now request summary and keywords
+
+        // استدعاء دبلجة الفيديو
+        const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
+        const ttsData = await ttsResponse.json();
+
+        const videoPlayer = document.getElementById('dubbed-video');
+        const videoSrc = document.getElementById('dubbed-video-src');
+
+        if (videoSrc && ttsData.video_url) {
+          videoSrc.src = ttsData.video_url;
+          videoPlayer.load();
+          videoPlayer.scrollIntoView({ behavior: 'smooth' });
+
+          const downloadBtn = document.getElementById('download-btn');
+          if (downloadBtn) {
+            downloadBtn.href = ttsData.video_url;
+          }
+        }
+
         generateSummary(currentVideoId);
         generateKeywords(currentVideoId);
       } else {
@@ -259,85 +273,33 @@
       console.error('Error:', error);
       alert('حدث خطأ في معالجة الفيديو');
     } finally {
-      // Hide progress
       document.querySelector('.progress-container').style.display = 'none';
     }
   });
 
-  // Generate summary
-  async function generateSummary(videoId) {
-    try {
-      const response = await fetch(`/api/videos/${videoId}/summary/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        }
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Update summary section
-        document.querySelector('.card-content p').textContent = data.summary.substring(0, 150) + '...';
-      }
-    } catch (error) {
-      console.error('Error generating summary:', error);
-    }
-  }
-
-  // Generate keywords
-  async function generateSummary(videoId) {
-    try {
-      const response = await fetch(`/api/videos/${videoId}/summary/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        }
-      });
-      
-      const data = await response.json();
-    
-    if (response.ok) {
-      // Update summary section with a more specific selector
-      const summaryCard = document.querySelector('.sidebar .card:nth-child(2)');
-      const summaryParagraph = summaryCard.querySelector('.card-content p');
-      
-      if (summaryParagraph) {
-        summaryParagraph.textContent = data.summary.substring(0, 150) + '...';
-      }
-    }
-  } catch (error) {
-    console.error('Error generating summary:', error);
-  }
-}
-
-  // Ask question
-  document.querySelector('.chat-input button').addEventListener('click', async function() {
+  // ✅ عند إرسال سؤال للمساعد الذكي
+  document.querySelector('.chat-input button').addEventListener('click', async function () {
     if (!currentVideoId) {
       alert('الرجاء معالجة فيديو أولاً');
       return;
     }
-    
+
     const questionInput = document.querySelector('.chat-input input');
     const question = questionInput.value.trim();
-    
+
     if (!question) {
       alert('الرجاء إدخال سؤال');
       return;
     }
-    
-    // Add user message to chat
+
     const chatMessages = document.querySelector('.chat-messages');
     const userMessageDiv = document.createElement('div');
     userMessageDiv.className = 'message user-message';
     userMessageDiv.textContent = question;
     chatMessages.appendChild(userMessageDiv);
-    
-    // Clear input
+
     questionInput.value = '';
-    
+
     try {
       const response = await fetch(`/api/videos/${currentVideoId}/ask/`, {
         method: 'POST',
@@ -347,17 +309,15 @@
         },
         body: JSON.stringify({ question: question })
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
-        // Add AI response to chat
         const aiMessageDiv = document.createElement('div');
         aiMessageDiv.className = 'message ai-message';
         aiMessageDiv.textContent = data.answer;
         chatMessages.appendChild(aiMessageDiv);
-        
-        // Scroll to bottom
+
         chatMessages.scrollTop = chatMessages.scrollHeight;
       } else {
         alert('حدث خطأ: ' + data.error);
@@ -368,4 +328,5 @@
     }
   });
 </script>
+
 </html>

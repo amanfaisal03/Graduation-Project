@@ -6,11 +6,11 @@ from rest_framework.response import Response
 from .models import Video, Question
 from .serializers import VideoSerializer, QuestionSerializer
 
-# Import your existing code
+#Import your existing code
 from Extract_Voice_and_STT_Aman.STT import TTS
 from LLM_Saad.LLM_Online import Full_LLM
 
-# API Keys and model settings
+#API Keys and model settings
 LLM_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_KEY = "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"
 
@@ -28,7 +28,12 @@ def process_video_url(request):
     existing_video = Video.objects.filter(url=video_url).first()
     if existing_video and existing_video.transcript:
         serializer = VideoSerializer(existing_video)
-        return Response({'message': 'Video already processed', 'video': serializer.data})
+        return Response({
+                         'message': 'Video processed successfully',
+                         'video': serializer.data,
+                         'video_url': '/media/Final-video.mp4'  
+})
+
     
     try:
         # Create or get video object

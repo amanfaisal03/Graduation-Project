@@ -75,6 +75,27 @@
             </div>
           </div>
           
+         
+
+<script>
+  // Simulated example: you should replace this with real backend updates or progress calculation
+  let progress = 0;
+  const fill = document.getElementById('progress-fill');
+  const percentageText = document.getElementById('progress-percentage');
+
+  // Simulate progress (you'd replace this with real video processing logic)
+  const simulateProgress = setInterval(() => {
+    if (progress >= 100) {
+      clearInterval(simulateProgress);
+    } else {
+      progress += 1; // increase this value as needed (e.g., by actual processing state)
+      fill.style.width = progress + '%';
+      percentageText.textContent = progress + '%';
+    }
+  }, 100); // Update every 100ms for simulation
+</script>
+
+          
           <div class="card" style="margin-top: 2rem;">
             <div class="card-header">
               <h2 class="card-title">مشغل الفيديو</h2>

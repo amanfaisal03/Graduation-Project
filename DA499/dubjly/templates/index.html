@@ -179,11 +179,11 @@
                 تقدم هذه المحاضرة المفاهيم الأساسية لتعلم الآلة وتطبيقاتها. المواضيع الرئيسية التي تمت تغطيتها تشمل:
               </p>
               <ul style="margin-top: 1rem; margin-right: 1.5rem; color: var(--gray); line-height: 1.6;">
-                <li>أنواع أساليب تعلم الآلة</li>
+                <!-- <li>أنواع أساليب تعلم الآلة</li>
                 <li>التعلم الخاضع للإشراف مقابل التعلم غير الخاضع للإشراف</li>
                 <li>الشبكات العصبية والتعلم العميق</li>
                 <li>تطبيقات واقعية في الرعاية الصحية والتعليم</li>
-                <li>الاعتبارات الأخلاقية في تطوير الذكاء الاصطناعي</li>
+                <li>الاعتبارات الأخلاقية في تطوير الذكاء الاصطناعي</li> -->
               </ul>
               <button class="btn-primary" style="margin-top: 1.5rem; width: 100%;">إنشاء ملاحظات مفصلة</button>
             </div>
@@ -279,7 +279,7 @@
       
       if (response.ok) {
         // Update summary section
-        document.querySelector('.card-content p').textContent = data.summary.substring(0, 150) + '...';
+        document.querySelector('.card-content p').textContent = data.summary.substring(0, 800) + '...';
       }
     } catch (error) {
       console.error('Error generating summary:', error);
@@ -305,7 +305,7 @@
       const summaryParagraph = summaryCard.querySelector('.card-content p');
       
       if (summaryParagraph) {
-        summaryParagraph.textContent = data.summary.substring(0, 150) + '...';
+        summaryParagraph.textContent = data.summary.substring(0, 800) + '...';
       }
     }
   } catch (error) {

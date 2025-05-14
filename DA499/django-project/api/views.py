@@ -24,7 +24,7 @@ def check_video(request):
 
             # Check if video already exists in database 
             existing_video = Video.objects.filter(url=video_url).first()
-            if existing_video:
+            if existing_video:   
                 serializer = VideoSerializer(existing_video)
                 return Response({
                     "message": "Video already exists ",

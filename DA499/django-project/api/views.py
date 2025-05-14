@@ -8,7 +8,6 @@ import requests
 from .models import Video
 
 
-
 #api_viwe(['GET'])
 @api_view(['POST'])
 def check_video(request):

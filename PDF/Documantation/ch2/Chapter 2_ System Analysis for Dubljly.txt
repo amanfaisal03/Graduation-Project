@@ -1,0 +1,167 @@
+[Word Formatting Instructions: Open Microsoft Word. Create a new document. Set font to Times New Roman, 12pt. Apply 1.15 line spacing, 1-inch margins. Use Heading 1 style for section titles (e.g., “2 System Analysis”), Heading 2 for subsections (e.g., “2.1 Data Analysis”). Insert tables with borders as described. Draw diagrams using Insert > Shapes. Number pages at bottom-right (Insert > Page Number > Bottom of Page > Plain Number 3). Save as .docx.]
+
+2 System Analysis
+
+This chapter analyzes the Dubljly system, which transforms English educational videos into Arabic-dubbed content for Jordanian students. It details data flow, user requirements, system components, and solution options, adhering to the Yarmouk University Department of Computer Information Systems guidelines [1]. The system addresses language barriers in education, as outlined in Chapter 1 [2].
+
+2.1 Data Analysis
+
+The Dubljly system processes YouTube videos into Arabic-dubbed videos, summaries, keywords, chatbot responses, and transcripts. The pipeline, based on [3, 4], includes nine steps:
+1. User submits a YouTube URL.
+2. System checks URL validity (True/False).
+3. If True, download video and extract audio.
+4. Perform Speech-to-Text (STT) transcription.
+5. Use Large Language Model (LLM) to generate summary, keywords, chatbot Q&A, and transcript.
+6. Generate Text-to-Speech (TTS) audio.
+7. Check speech timing against video duration.
+8. Merge audio with video.
+9. Deliver dubbed video to user.
+
+2.1.1 Data Flow Diagrams
+
+Two Data Flow Diagrams (DFDs) model the system: Level-0 (context) and Level-1 (detailed processes).
+
+Level-0 DFD:
+- Entities: User (submits URL, receives video), YouTube (provides video).
+- Process: Dubljly System (processes URL to dubbed video).
+- Data Stores: Video Metadata (URL, title), Transcripts (text), Dubbed Videos (MP4).
+- Data Flows: YouTube URL → Dubljly System → Dubbed Video; Video File from YouTube; Metadata, Transcripts, Videos to stores.
+
+[Diagram Instructions: In Word, go to Insert > Shapes. Draw a Rectangle for “User” (left, 2x1 cm), a Rounded Rectangle for “Dubljly System” (center, 3x1.5 cm), and a Rectangle for “YouTube” (right, 2x1 cm). Below Dubljly System, draw three Open Rectangles (right side open, 2.5x1 cm) for “Video Metadata”, “Transcripts”, “Dubbed Videos”. Add Arrows (Line Arrow): User → “YouTube URL” → Dubljly System; Dubljly System → “Dubbed Video” → User; YouTube → “Video File” → Dubljly System; Dubljly System → “Metadata” → Video Metadata, → “Transcripts” → Transcripts, → “Videos” → Dubbed Videos. Use Text Boxes for labels. Center diagram. Insert caption below: “Figure 2.1: Level-0 Data Flow Diagram”.]
+
+Level-1 DFD:
+- Processes: (1) Validate URL, (2) Download & Extract Audio, (3) STT, (4) LLM Processing, (5) TTS, (6) Check Timing, (7) Merge Video.
+- Data Stores: Video Files (MP4), Audio Files (WAV), Transcripts (text), Translations (Arabic text), Dubbed Videos (MP4).
+- Outputs: Summary, Keywords, Chatbot Q&A.
+- Data Flows: URL → Validation → MP4 → WAV → English Text → Arabic Text → Audio → Synced Audio → Dubbed MP4.
+
+[Diagram Instructions: Draw seven Rounded Rectangles (2.5x1 cm) in a horizontal line, labeled: “1. Validate URL”, “2. Download & Extract”, “3. STT”, “4. LLM Processing”, “5. TTS”, “6. Check Timing”, “7. Merge Video”. Below, draw five Open Rectangles (2.5x1 cm) for “Video Files”, “Audio Files”, “Transcripts”, “Translations”, “Dubbed Videos”. Add three Ellipses (2x1 cm) below LLM Processing for “Summary”, “Keywords”, “Chatbot Q&A”. Connect with Arrows: Validate URL → “MP4” → Download & Extract → “WAV” → STT → “English Text” → LLM Processing → “Arabic Text” → TTS → “Audio” → Check Timing → “Synced Audio” → Merge Video → “MP4” → Dubbed Videos. Add Arrows: Video Files → Download & Extract; Audio Files → STT; Transcripts → LLM Processing; Translations → TTS; Dubbed Videos → Merge Video. LLM Processing → Summary, Keywords, Chatbot Q&A. Use Text Boxes for labels. Center diagram. Insert caption: “Figure 2.2: Level-1 Data Flow Diagram”.]
+
+The Level-0 DFD shows the system’s external interactions, while Level-1 details the pipeline: URL validation with `yt_dlp`, video download and audio extraction with FFmpeg, transcription with FastWhisper, LLM processing with Groq API, audio synthesis with XTTS-v2, timing check, and video merging with FFmpeg [3, 4].
+
+2.1.2 System Requirements
+
+2.1.2.1 Clients, Customers, and Users
+- Students: Arabic-speaking learners (e.g., Jordanian high school/university students) submitting YouTube URLs for dubbed videos, summaries, keywords, and chatbot Q&A [5].
+- Educators: Teachers uploading videos for classroom use, needing simple access to dubbed content.
+- Administrators: IT staff managing system operations and API endpoints.
+
+Use-case Diagram:
+- Actors: Student, Educator, Administrator.
+- Use Cases: Submit URL, View Dubbed Video, Use Chatbot, View Summary/Keywords (Student); Upload Multiple Videos (Educator); Manage System (Administrator).
+- Relationships: Use Chatbot extends View Dubbed Video; View Summary/Keywords includes View Dubbed Video.
+
+[Diagram Instructions: Draw three Stick Figures (Insert > Shapes > Stick Figure, 2 cm tall) for “Student” (left), “Educator” (center), “Administrator” (right). Below, draw five Ellipses (2.5x1 cm): “Submit URL”, “View Dubbed Video”, “Use Chatbot”, “View Summary/Keywords” (below Student); “Upload Multiple Videos” (below Educator); “Manage System” (below Administrator). Add Lines: Student to Submit URL, View Dubbed Video, Use Chatbot, View Summary/Keywords; Educator to Upload Multiple Videos, View Dubbed Video; Administrator to Manage System. Add Dashed Lines: Use Chatbot → “extends” → View Dubbed Video; View Summary/Keywords → “includes” → View Dubbed Video. Use Text Boxes for labels. Center diagram. Insert caption: “Figure 2.3: Use-case Diagram”.]
+
+The diagram captures user interactions, focusing on student accessibility and educator/administrator functionality [5].
+
+2.1.2.2 Functional and Data Requirements
+Functional Requirements:
+1. Validate YouTube URL format via `/api/video/` endpoint [6].
+2. Download MP4 video using `yt_dlp` if URL is valid [3].
+3. Extract WAV audio with FFmpeg [3].
+4. Transcribe audio to English text with FastWhisper [3].
+5. Generate Arabic translation, summary, keywords, and Q&A with Groq API [7].
+6. Synthesize Arabic audio with XTTS-v2 [4].
+7. Verify audio timing matches video duration [4].
+8. Merge audio and video into MP4 with FFmpeg [4].
+9. Deliver dubbed video via web interface or `/tts-api/generate-dubbed-video/<video_id>/` [6].
+
+Data Requirements:
+- Input: YouTube URL (string, validated), MP4 video (up to 2 hours).
+- Processed: WAV audio, English transcript (text), Arabic translation (text), summary (text), keywords (list), Q&A (JSON), Arabic audio (WAV).
+- Output: Dubbed MP4 video, JSON API responses (metadata, chatbot answers).
+- Storage: SQLite database with `Video` and `Transcript` models, file system at `/media/videos/` [8, 9].
+
+[Table Instructions: Insert a table (Insert > Table > 2x7). Set borders (Design > Borders > All Borders). Columns: “Data Type”, “Description”. Rows: 
+- YouTube URL: String, validated format
+- Video File: MP4, stored in /media/videos/
+- Audio File: WAV, temporary for transcription
+- Transcript: Text with timestamps, stored in database
+- Translation: Arabic text, stored in database
+- Summary/Keywords/Q&A: Text/JSON, stored in database
+- Dubbed Video: MP4, final output
+Center table. Insert caption below: “Table 2.1: Data Requirements”.]
+
+2.1.2.3 Non-functional Requirements
+- Usability: Arabic-language web interface with clear buttons (e.g., “ابدأ الدبلجة”), minimal user steps [10].
+- Performance: Process a 10-minute video in 2–5 minutes on a PC with i5 CPU and 8GB RAM [10].
+- Security: Require API key for `/api/video/` and `/tts-api/` endpoints, delete temporary files after processing [9].
+- Accessibility: Support right-to-left Arabic text, mobile-responsive design [10].
+- Reliability: Achieve 95% success rate for valid URLs, display Arabic error messages for invalid inputs [7].
+
+2.1.3 Class Diagrams
+
+The system uses Django models for data storage and processing classes for pipeline tasks.
+
+Classes:
+- Video (Django model): Attributes (id: integer, url: string, title: string, generated_video_url: string), Methods (save()) [8].
+- Transcript (Django model): Attributes (video: Video, content: text, timestamps: JSON), Methods (save()) [8].
+- STTProcessor: Attributes (fastwhisper_model), Methods (transcribe()) [11].
+- LLMProcessor: Attributes (api_key: string), Methods (translate(), summarize(), generate_keywords(), generate_qa()) [7].
+- TTSProcessor: Attributes (xtts_model), Methods (generate_audio(), check_timing()) [4].
+
+Relationships:
+- Transcript has a one-to-one relationship with Video.
+- STTProcessor processes Video to create Transcript.
+- LLMProcessor processes Transcript to generate outputs.
+- TTSProcessor generates audio for Video.
+
+[Diagram Instructions: Draw five Rectangles (3x2 cm): “Video”, “Transcript” (below Video), “STTProcessor”, “LLMProcessor”, “TTSProcessor” (right side, stacked vertically). In each, list attributes (e.g., “- id: integer”) and methods (e.g., “+ save()”). Add a Line from Transcript to Video, labeled “1:1”. Add Arrows: STTProcessor → Video (“processes”), LLMProcessor → Transcript (“processes”), TTSProcessor → Video (“generates”). Use Text Boxes for labels. Center diagram. Insert caption: “Figure 2.4: Class Diagram”.]
+
+The class diagram reflects the system’s modular design, with Django models managing persistent data and processing classes handling pipeline steps [8, 11, 7, 4].
+
+2.1.4 Proposed Solutions
+
+The Dubljly system processes videos through a 9-step pipeline [3, 4]:
+1. User submits a YouTube URL via the web interface or `/api/video/` [6].
+2. System validates the URL using `yt_dlp`; if False, display error; if True, proceed [3].
+3. Download MP4 video and extract WAV audio with FFmpeg [3].
+4. Transcribe audio to English text with FastWhisper [3].
+5. Use Groq API to generate Arabic translation, summary, keywords, and Q&A [7].
+6. Synthesize Arabic audio with XTTS-v2 [4].
+7. Check audio duration matches video timing [4].
+8. Merge audio and video into MP4 with FFmpeg [4].
+9. Deliver dubbed video via web interface or `/tts-api/generate-dubbed-video/<video_id>/` [6].
+
+Tool selections were based on performance evaluations:
+- `yt_dlp` outperforms `pytube` in download speed [3].
+- FastWhisper is faster and more accurate than OpenAI Whisper [3].
+- Groq API produces natural Arabic translations [7].
+- XTTS-v2 offers high-quality Arabic audio [4].
+
+The system uses a Django web application, running on Windows 11 with cloud-based LLM processing via Groq API [10].
+
+[Table Instructions: Insert a table (Insert > Table > 3x5). Set borders. Columns: “Task”, “Tool”, “Reason”. Rows:
+- Download: yt_dlp, Faster than pytube [3]
+- Audio Extraction: FFmpeg, Reliable [3]
+- Transcription: FastWhisper, Speed and accuracy [3]
+- Translation/Summary: Groq API, Natural Arabic [7]
+- TTS: XTTS-v2, High-quality voice [4]
+Center table. Insert caption: “Table 2.2: Tool Selection”.]
+
+2.1.5 Alternative Solutions
+
+Three alternative approaches were considered:
+- Cloud-Based Processing: Using Google STT and AWS Polly offers scalability but incurs high costs and requires constant internet [3].
+- Subtitle-Only Solution: Generating Arabic subtitles is faster but less immersive for students [2].
+- Human Dubbing: Professional dubbing provides high-quality audio but costs $2,000 per hour and takes weeks [2].
+
+Dubljly’s hybrid solution (local processing with cloud LLM) is cost-effective and suitable for Jordanian educational institutions [5].
+
+References
+[1] Report Template, Department of Computer Information Systems, Yarmouk University, 2021.
+[2] Dubljly Team, Chapter 1: Introduction, Yarmouk University, 2025.
+[3] Dubljly Project in the First Phase, Yarmouk University, 2025.
+[4] Dubjly Project: TTS Module Documentation, Yarmouk University, 2025.
+[5] DA 499 Assignment-2, Dubljly Project Description, Yarmouk University, 2025.
+[6] views.py Source Code, Dubljly Project, 2025.
+[7] LLM_Online.py Source Code, Dubljly Project, 2025.
+[8] models.py Source Code, Dubljly Project, 2025.
+[9] settings.py Source Code, Dubljly Project, 2025.
+[10] Chapter 3: Design Considerations, Yarmouk University, 2025.
+[11] STT.py Source Code, Dubljly Project, 2025.
+
+[Word Instructions: Insert references as a numbered list under “References” (Times New Roman 10pt). Ensure each citation matches in-text references (e.g., [1]). Add a page break after references. Save document as “Chapter_2_Dubljly.docx”.]
+
+[Optional Diagram Generation: To insert pre-drawn diagrams, use an online tool like draw.io (https://app.diagrams.net). Create each diagram as described, export as PNG (File > Export > PNG), and insert into Word (Insert > Pictures > This Device). Place each PNG below its caption (e.g., Figure 2.1). Alternatively, share existing diagrams if available.]

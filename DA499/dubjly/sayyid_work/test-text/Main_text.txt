@@ -1,6 +1,12 @@
-[0.00 - 4.00] لقد قصنا الماضي مدري لي جلولي لا تسويها لانه خلاص شكلها رياء
-[4.00 - 8.00] الشاهد بعدها لما فكرت و الآن قاعدة فكرت
-[8.00 - 11.00] قلت بالعكس عدم السجود
-[11.00 - 16.00] علشان الناس ما تقول لانه رياء هو رياء
-[16.00 - 19.00] فالواحد اذا يريد ان يقوم بعمل لله
-[19.00 - 23.00] وامتنع عن القيام به خشية من كلام الناس هو دار رياء
+[0.00 - 5.20] Hello everyone, welcome to lecture 4 of the AI series. In today's lecture we'll
+[5.20 - 11.72] talk about NLP or natural language processing. The NLP area of AI is
+[11.72 - 16.20] concerned with instructing computers to understand human language and
+[16.20 - 21.88] interpret it. It is used in chatbots to understand and respond to natural
+[21.88 - 26.44] language inputs. Chatbots can be used for customer service, for booking
+[26.44 - 31.04] appointments, for mental health support and even in chat GPT. It is also used in
+[31.04 - 37.44] sentiment analysis to analyze large amount of text such as social media
+[37.44 - 43.32] post and customer reviews. NLP is used in machine translations to create systems
+[43.32 - 47.64] that can translate text from one language to another. It is also used in
+[47.64 - 54.04] speech recognition to convert spoken words into text, Alexa, Siri. These are a
+[54.04 - 59.20] couple of examples where NLP is utilized. So that's it for today's lecture. I'll
+[59.20 - 61.84] see in the next

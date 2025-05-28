@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('summary', models.TextField(blank=True, null=True)),
                 ('keywords', models.TextField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('generated_video_url', models.CharField(blank=True, max_length=255, null=True)),
             ],
         ),
         migrations.CreateModel(

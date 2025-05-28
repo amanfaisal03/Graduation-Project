@@ -66,7 +66,7 @@ def get_video_info(request, video_id):
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
-def generate_summary(request, video_id):
+def generate_summary(request, video_id): # generate_summary and generate transcript
     """
     Generate summary for a video
     """
@@ -80,12 +80,15 @@ def generate_summary(request, video_id):
         # Use your LLM code to generate summary
         llm = Full_LLM(model=LLM_MODEL, api_key=GROQ_API_KEY, Text=video.transcript, Online=True)
         summary = llm.Summarize()
-        
         # Save summary to video object
         video.summary = summary
         video.save()
+        A_transcript = llm.Transcript()
+        # Save A_transcript to video object
+        video.A_transcript = A_transcript
+        video.save()
         
-        return Response({'message': 'Summary generated successfully', 'summary': summary})
+        return Response({'message': 'Summary & Transcript generated successfully', 'summary': summary})
     
     except Video.DoesNotExist:
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)

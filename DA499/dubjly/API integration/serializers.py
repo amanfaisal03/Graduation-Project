@@ -21,7 +21,7 @@ from .models import Video, Question
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['id', 'url', 'title', 'transcript', 'summary', 'keywords', 'created_at', 'generated_video_url']
+        fields = ['id', 'url', 'title', 'transcript', 'A_transcript','summary', 'keywords', 'created_at', 'generated_video_url']
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:

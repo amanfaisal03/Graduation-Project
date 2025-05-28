@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField()),
                 ('title', models.CharField(blank=True, max_length=255, null=True)),
                 ('transcript', models.TextField(blank=True, null=True)),
-                ('A_transcript', models.TextField(blank=True, null=True)),
+                ('a_transcript', models.TextField(blank=True, null=True)),
                 ('summary', models.TextField(blank=True, null=True)),
                 ('keywords', models.TextField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

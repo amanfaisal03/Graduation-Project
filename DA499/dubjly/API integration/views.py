@@ -94,7 +94,7 @@ def generate_summary(request, video_id):
 
         A_transcript = llm.Transcript()
         # Save A_transcript to video object
-        video.A_transcript = A_transcript
+        video.a_transcript = A_transcript
         video.save()
         
         return Response({'message': 'Summary generated successfully', 'summary': summary})

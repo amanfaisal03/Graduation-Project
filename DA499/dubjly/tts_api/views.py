@@ -18,7 +18,7 @@ def generate_dubbed_video(request, video_id):
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
-        transcript = data.get("A_transcript", "")
+        transcript = data.get("a_transcript", "")
 
         if not transcript:
             return Response({"error": "No transcript found"}, status=status.HTTP_400_BAD_REQUEST)

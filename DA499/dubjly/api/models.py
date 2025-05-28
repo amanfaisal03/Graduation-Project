@@ -4,7 +4,7 @@ class Video(models.Model):
     url = models.URLField()
     title = models.CharField(max_length=255, blank=True, null=True)
     transcript = models.TextField(blank=True, null=True)
-    A_transcript = models.TextField(blank=True, null=True)
+    a_transcript = models.TextField(blank=True, null=True)
     summary = models.TextField(blank=True, null=True)
     keywords = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

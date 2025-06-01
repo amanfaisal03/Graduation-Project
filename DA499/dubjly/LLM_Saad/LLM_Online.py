@@ -64,7 +64,7 @@ class Full_LLM(Groq_Env):
         self.T_Text = Text # text with time
         self.C_Text = self.del_time(Text) # text without time
         self.Prompts = {
-                        "Summarize" : "based on the following text that represente a video transcript, I want you to generate a summary for this video in the arabic language. The text :"+f"\n'''{self.C_Text }'''"   
+                        "Summarize" : "based on the following text that represente a video transcript, I want you to generate a summary for this video in the arabic language. The text :"+f"\n'''{self.C_Text }'''.\nPlease remember: I want the summary to be shown without any introductory phrases like \"هذا تلخيص للفيديو باللغة العربية: \". Also, the summary should not exceed 250 characters!!"   
                         ,"Keywords" : "based on the following text that represente a video transcript, I want you to specify the most improtant keywords (the words that are improtant to know for any one want to be good in the video filed) \
                             in the arabic language and give them to me with a short summary about each one of them also in the Arabic language. The text :"+f"\n'''{self.C_Text }'''" 
                         ,"Summarize & Keywords" : "based on the following text that represente a video transcript,I want you to generate a summary for this video in the arabic language then specify the most improtant keywords (the words that are improtant to know for any one want to be good in the video filed) \

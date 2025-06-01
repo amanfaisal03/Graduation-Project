@@ -18,7 +18,7 @@ class Start_the_TTS_process:
         self.CSV_PATH = os.path.join(base_dir, "sayyid_work", "video_and_csv", "timing_sentences_.csv")
 
         # مسار ملف العينة الصوتية
-        self.VOICE_SAMPLE = os.path.join(base_dir, "sayyid_work", "input-test-voice", "غرباء.wav")
+        self.VOICE_SAMPLE = os.path.join(base_dir, "sayyid_work", "input-test-voice", "صوت اذاعي.wav")
 
         # مجلدات الصوتيات
         self.ORIGINAL_AUDIO_FOLDER = os.path.join(base_dir, "sayyid_work", "output-test-voice", "original-video-voice")

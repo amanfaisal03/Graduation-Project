@@ -116,12 +116,12 @@
                   <div class="message ai-message">
                     مرحباً! أنا مساعدك التعليمي الذكي. اسألني أي سؤال حول محتوى الفيديو.
                   </div>
-                  <div class="message user-message">
+                  <!-- <div class="message user-message">
                     هل يمكنك شرح مفهوم تعلم الآلة بطريقة مبسطة؟
                   </div>
                   <div class="message ai-message">
                     بالتأكيد! تعلم الآلة هو طريقة تتعلم بها أجهزة الكمبيوتر أنماطاً من البيانات دون برمجة صريحة. إنه مثل تعليم الكمبيوتر التعرف على القطط من خلال إظهار آلاف صور القطط بدلاً من كتابة قواعد محددة.
-                  </div>
+                  </div> -->
                 </div>
                 
                 <div class="chat-input">
@@ -180,7 +180,7 @@
             </div>
             <div class="card-content">
               <p style="line-height: 1.6; color: var(--gray);">
-                تقدم هذه المحاضرة المفاهيم الأساسية لتعلم الآلة وتطبيقاتها. المواضيع الرئيسية التي تمت تغطيتها تشمل:
+               
               </p>
               <ul style="margin-top: 1rem; margin-right: 1.5rem; color: var(--gray); line-height: 1.6;">
                 <!-- <li>أنواع أساليب تعلم الآلة</li>
@@ -197,7 +197,8 @@
     </div>
   </main>
 </body>
-<!-- Add this at the end of the body tag -->
+
+
 <script>
   // ✅ تعريف csrf token
   function getCookie(name) {
@@ -235,7 +236,7 @@
       
       if (response.ok) {
         // Update summary section
-        document.querySelector('.card-content p').textContent = data.summary.substring(0, 150) + '...';
+        document.querySelector('.card-content p').textContent = data.summary.substring(0, 250) + '...';
       }
     } catch (error) {
       console.error('Error generating summary:', error);
@@ -244,7 +245,6 @@
 
   // Generate keywords
   async function generateSummary(videoId) {
-    try {
       const response = await fetch(`/api/videos/${videoId}/summary/`, {
         method: 'POST',
         headers: {
@@ -261,12 +261,9 @@
       const summaryParagraph = summaryCard.querySelector('.card-content p');
       
       if (summaryParagraph) {
-        summaryParagraph.textContent = data.summary.substring(0, 150) + '...';
+        summaryParagraph.textContent = data.summary.substring(0, 250) + '...';
       }
     }
-  } catch (error) {
-    console.error('Error generating summary:', error);
-  }
 }
 
   // Ask question

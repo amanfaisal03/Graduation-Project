@@ -218,64 +218,7 @@
   const csrftoken = getCookie('csrftoken');
   let currentVideoId = null;
 
-  // ✅ عند الضغط على زر "معالجة"
-  document.querySelector('.input-group button').addEventListener('click', async function () {
-    const urlInput = document.querySelector('.input-group input');
-    const videoUrl = urlInput.value.trim();
-
-    if (!videoUrl) {
-      alert('الرجاء إدخال رابط فيديو صالح');
-      return;
-    }
-
-    // Show progress bar
-    document.querySelector('.progress-container').style.display = 'block';
-
-    try {
-      const response = await fetch('/api/videos/process/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify({ url: videoUrl })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        currentVideoId = data.video.id;
-
-        // استدعاء دبلجة الفيديو
-        const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
-        const ttsData = await ttsResponse.json();
-
-        const videoPlayer = document.getElementById('dubbed-video');
-        const videoSrc = document.getElementById('dubbed-video-src');
-
-        if (videoSrc && ttsData.video_url) {
-          videoSrc.src = ttsData.video_url;
-          videoPlayer.load();
-          videoPlayer.scrollIntoView({ behavior: 'smooth' });
-
-          const downloadBtn = document.getElementById('download-btn');
-          if (downloadBtn) {
-            downloadBtn.href = ttsData.video_url;
-          }
-        }
-
-        generateSummary(currentVideoId);
-        generateKeywords(currentVideoId);
-      } else {
-        alert('حدث خطأ: ' + data.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('حدث خطأ في معالجة الفيديو');
-    } finally {
-      document.querySelector('.progress-container').style.display = 'none';
-    }
-  });
+ 
 
   // Generate summary
   async function generateSummary(videoId) {
@@ -374,6 +317,64 @@
     } catch (error) {
       console.error('Error asking question:', error);
       alert('حدث خطأ في معالجة السؤال');
+    }
+  });
+   // ✅ عند الضغط على زر "معالجة"
+  document.querySelector('.input-group button').addEventListener('click', async function () {
+    const urlInput = document.querySelector('.input-group input');
+    const videoUrl = urlInput.value.trim();
+
+    if (!videoUrl) {
+      alert('الرجاء إدخال رابط فيديو صالح');
+      return;
+    }
+
+    // Show progress bar
+    document.querySelector('.progress-container').style.display = 'block';
+
+    try {
+      const response = await fetch('/api/videos/process/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ url: videoUrl })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        currentVideoId = data.video.id;
+
+        // استدعاء دبلجة الفيديو
+        const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
+        const ttsData = await ttsResponse.json();
+
+        const videoPlayer = document.getElementById('dubbed-video');
+        const videoSrc = document.getElementById('dubbed-video-src');
+
+        if (videoSrc && ttsData.video_url) {
+          videoSrc.src = ttsData.video_url;
+          videoPlayer.load();
+          videoPlayer.scrollIntoView({ behavior: 'smooth' });
+
+          const downloadBtn = document.getElementById('download-btn');
+          if (downloadBtn) {
+            downloadBtn.href = ttsData.video_url;
+          }
+        }
+
+        generateSummary(currentVideoId);
+        generateKeywords(currentVideoId);
+      } else {
+        alert('حدث خطأ: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('حدث خطأ في معالجة الفيديو');
+    } finally {
+      document.querySelector('.progress-container').style.display = 'none';
     }
   });
 </script>

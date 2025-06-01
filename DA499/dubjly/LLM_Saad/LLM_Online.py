@@ -72,7 +72,7 @@ class Full_LLM(Groq_Env):
                         ,"Transcript": "based on the following text that represente a video transcript, I want you to convert it to arabic language.\
                             keep in your mind that i want it more similar from the time spending in the read so when you convert it i want to give me the time and the text such as the english transcript that you will read it. \
                             Don't put any other language !!.\
-                            .The English text :"+f"\n'''{self.T_Text }''' \nDon't change the time in the text, just convert the text to arabic language and keep the time as it is."
+                            .The English text :"+f"\n'''{self.T_Text }''' \nDon't change the time in the text, just convert the text to arabic language and keep the time as it is.note:in your response, you should not put any other word except the arabic text with the time. "
                         ,"Quesitons & Answers" : "based on the following text that represente a video transcript, I want you to generate 5 test questions in the arabic language with them answers also in the Arabic. The text :"+f"\n'''{self.C_Text }'''"
                         ,"ChatBot Answer" : "based on the following text that represente a video transcript and your knowledge, answer the question that i will give to you. The text : "+f"\n'''{self.C_Text }''' \n"+" the question is : "
                         }

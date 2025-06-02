@@ -13,7 +13,7 @@ class TTS():
         self.temp_audio_file = "temp_audio.m4a"
         self.video_name="video.mp4"
         self.video_format='mp4'
-        self.model = WhisperModel('small',device='cpu')#device='cuda',compute_type='float16')
+        self.model = WhisperModel('small', device='cuda', compute_type='float16')
         self.check_video()
         
     def check_video(self):
@@ -40,7 +40,10 @@ class TTS():
     
 
     def download_video(self):
-
+        #  حذف الفيديو السابق إذا موجود
+        if os.path.exists(self.video_name):
+         os.remove(self.video_name)
+         print(f"🗑️ تم حذف الفيديو السابق: {self.video_name}")
         ydl_opts = {
             'format': self.video_format,
             'outtmpl': self.video_name , 
@@ -63,7 +66,7 @@ class TTS():
         subprocess.run(yt_dlp_cmd, check=True)
 
         ffmpeg_cmd = [
-        'ffmpeg', '-i', self.temp_audio_file, '-vn',
+        'ffmpeg','-y', '-i', self.temp_audio_file, '-vn',
         '-acodec', 'libmp3lame' if self.output_format == 'mp3' else 'aac',
         '-ar', '44100', '-ab', '192k', '-f', self.output_format, self.audio_name
             ]

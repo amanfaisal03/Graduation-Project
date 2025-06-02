@@ -317,63 +317,70 @@
     }
   });
    // ✅ عند الضغط على زر "معالجة"
-  document.querySelector('.input-group button').addEventListener('click', async function () {
-    const urlInput = document.querySelector('.input-group input');
-    const videoUrl = urlInput.value.trim();
+  // ...existing code...
 
-    if (!videoUrl) {
-      alert('الرجاء إدخال رابط فيديو صالح');
-      return;
-    }
+document.querySelector('.input-group button').addEventListener('click', async function () {
+  const urlInput = document.querySelector('.input-group input');
+  const videoUrl = urlInput.value.trim();
 
-    // Show progress bar
-    document.querySelector('.progress-container').style.display = 'block';
+  if (!videoUrl) {
+    alert('الرجاء إدخال رابط فيديو صالح');
+    return;
+  }
 
-    try {
-      const response = await fetch('/api/videos/process/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify({ url: videoUrl })
-      });
+  document.querySelector('.progress-container').style.display = 'block';
 
-      const data = await response.json();
+  try {
+    const response = await fetch('/api/videos/process/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({ url: videoUrl })
+    });
 
-      if (response.ok) {
-        currentVideoId = data.video.id;
+    const data = await response.json();
 
-        // استدعاء دبلجة الفيديو
-        const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
-        const ttsData = await ttsResponse.json();
+    if (response.ok) {
+      currentVideoId = data.video.id;
 
-        const videoPlayer = document.getElementById('dubbed-video');
-        const videoSrc = document.getElementById('dubbed-video-src');
+      // 1. توليد الملخص أولاً وانتظر انتهاءه
+      await generateSummary(currentVideoId);
 
-        if (videoSrc && ttsData.video_url) {
-          videoSrc.src = ttsData.video_url;
-          videoPlayer.load();
-          videoPlayer.scrollIntoView({ behavior: 'smooth' });
+      // 2. بعد نجاح الملخص، استدعي دبلجة الفيديو
+      const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
+      const ttsData = await ttsResponse.json();
 
-          const downloadBtn = document.getElementById('download-btn');
-          if (downloadBtn) {
-            downloadBtn.href = ttsData.video_url;
-          }
+      const videoPlayer = document.getElementById('dubbed-video');
+      const videoSrc = document.getElementById('dubbed-video-src');
+
+      if (videoSrc && ttsData.video_url) {
+        videoSrc.src = ttsData.video_url;
+        videoPlayer.load();
+        videoPlayer.scrollIntoView({ behavior: 'smooth' });
+
+        const downloadBtn = document.getElementById('download-btn');
+        if (downloadBtn) {
+          downloadBtn.href = ttsData.video_url;
         }
-
-        generateSummary(currentVideoId);
-        generateKeywords(currentVideoId);
-      } else {
-        alert('حدث خطأ: ' + data.error);
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('حدث خطأ في معالجة الفيديو');
-    } finally {
-      document.querySelector('.progress-container').style.display = 'none';
+
+      // 3. توليد الكلمات المفتاحية (اختياري)
+      generateKeywords(currentVideoId);
+
+    } else {
+      alert('حدث خطأ: ' + data.error);
     }
-  });
+  } catch (error) {
+    console.error('Error:', error);
+    alert('حدث خطأ في معالجة الفيديو');
+  } finally {
+    document.querySelector('.progress-container').style.display = 'none';
+  }
+});
+
+// ...existing code...
 </script>
 
 </html>

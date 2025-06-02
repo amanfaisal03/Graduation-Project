@@ -1,40 +1,38 @@
 from sayyid_work.python_scripts.Full_codes.Sayyid_work_TTS import *
 import os
 import time
-
+import shutil
 class Start_the_TTS_process:
-    def __init__(self,text_input_path, base_dir=r"C:\Users\sauui\XTTS-project\Graduation-Project\DA499\dubjly"):
+    def __init__(self, text_input_path, base_dir=r"C:\Users\sauui\XTTS-project\Graduation-Project\DA499\dubjly", video_id=None):
         self.generator = Generating_audio()
         self.merger = MergingAudio()
 
         self.BASE_DIR = base_dir
-        self.TEXT_INPUT = text_input_path  # المسار الذي يحتوي على النص المُستخرج من سعد
+        self.TEXT_INPUT = text_input_path
+        self.video_id = video_id or "default"
 
-        # مسارات الفيديو
-        self.VIDEO_INPUT_ORIGINAL = os.path.join(base_dir, "video.mp4")
-        self.VIDEO_OUTPUT_SILENT = os.path.join(base_dir, "sayyid_work", "video_and_csv", "silent_video.mp4")
+        # المجلد الخاص بالفيديو الحالي
+        self.OUTPUT_DIR = os.path.join(base_dir, "media", "video_outputs", f"video_{self.video_id}")
 
-        # مسار ملف CSV المؤقت للنصوص والتوقيتات
-        self.CSV_PATH = os.path.join(base_dir, "sayyid_work", "video_and_csv", "timing_sentences_.csv")
-
-        # مسار ملف العينة الصوتية
+        # المسارات
+        
+       
+       # self.VIDEO_INPUT_ORIGINAL = os.path.join(base_dir, "media", "video_outputs", f"video_{self.video_id}", f"original_video_{self.video_id}.mp4")
+        self.VIDEO_OUTPUT_SILENT = os.path.join(self.OUTPUT_DIR, "silent_video.mp4")
+        self.VIDEO_INPUT_ORIGINAL = os.path.join(base_dir,"video.mp4")
+        self.CSV_PATH = os.path.join(self.OUTPUT_DIR, "timing_sentences_.csv")
         self.VOICE_SAMPLE = os.path.join(base_dir, "sayyid_work", "input-test-voice", "صوت اذاعي.wav")
 
-        # مجلدات الصوتيات
-        self.ORIGINAL_AUDIO_FOLDER = os.path.join(base_dir, "sayyid_work", "output-test-voice", "original-video-voice")
-        self.CLEANED_AUDIO_FOLDER = os.path.join(base_dir, "sayyid_work", "output-test-voice", "removed-voices")
+        self.ORIGINAL_AUDIO_FOLDER = os.path.join(self.OUTPUT_DIR, "original-video-voice")
+        self.CLEANED_AUDIO_FOLDER = os.path.join(self.OUTPUT_DIR, "removed-voices")
+        self.MERGED_AUDIO = os.path.join(self.OUTPUT_DIR, "merged_output.wav")
+        self.ADJUSTED_AUDIO = os.path.join(self.OUTPUT_DIR, "merged_output_adjusted.wav")
+        self.FINAL_VIDEO = os.path.join(self.OUTPUT_DIR, f"Final_video_{self.video_id}.mp4")
         
-        # مسارات ملفات الصوت النهائي
-        self.MERGED_AUDIO = os.path.join(base_dir, "sayyid_work", "output-test-voice", "merged_output.wav")
-        self.ADJUSTED_AUDIO = os.path.join(base_dir, "sayyid_work", "output-test-voice", "merged_output_adjusted.wav")
-        
-        # مسار الفيديو النهائي
-        self.FINAL_VIDEO = os.path.join(base_dir, "media", "Final_video.mp4")
-
-        # إنشاء المجلدات إذا لم تكن موجودة
-        os.makedirs(os.path.dirname(self.CSV_PATH), exist_ok=True)
+        # إنشاء جميع المجلدات
         os.makedirs(self.ORIGINAL_AUDIO_FOLDER, exist_ok=True)
         os.makedirs(self.CLEANED_AUDIO_FOLDER, exist_ok=True)
+        os.makedirs(os.path.dirname(self.CSV_PATH), exist_ok=True)
         os.makedirs(os.path.dirname(self.MERGED_AUDIO), exist_ok=True)
         os.makedirs(os.path.dirname(self.ADJUSTED_AUDIO), exist_ok=True)
         os.makedirs(os.path.dirname(self.FINAL_VIDEO), exist_ok=True)
@@ -87,6 +85,14 @@ class Start_the_TTS_process:
             self.ADJUSTED_AUDIO,
             self.FINAL_VIDEO
         )
+        # 8️⃣ حفظ نسخة من ملف النص في مجلد الفيديو
+        
+        try:
+            target_text_path = os.path.join(self.OUTPUT_DIR, "a_text.txt")
+            shutil.copyfile(self.TEXT_INPUT, target_text_path)
+            print(f"✔ تم حفظ نسخة من النص في: {target_text_path}")
+        except Exception as e:
+            print(f"❌ فشل في حفظ النص مع الفيديو: {e}")
 
         # ⏱️ نهاية التنفيذ
         end_time = time.time()

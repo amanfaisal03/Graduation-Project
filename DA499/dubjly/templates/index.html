@@ -244,7 +244,7 @@
     }
  }
 
-// generate_keywords function
+// Replace the existing generate_keywords function with this one:
 async function generate_keywords(videoId) {
     const response = await fetch(`/api/videos/${videoId}/keywords/`, {
         method: 'POST',
@@ -257,41 +257,31 @@ async function generate_keywords(videoId) {
     const data = await response.json();
 
     if (response.ok) {
-        // Update keywords section with the correct selector
-        const keywordCard = document.querySelector('.sidebar .card:nth-child(1)'); // Changed to first card
+        const keywordCard = document.querySelector('.sidebar .card:nth-child(1)');
         const terminologyList = keywordCard.querySelector('.terminology-list');
         
         if (terminologyList) {
             // Clear existing terminology items
             terminologyList.innerHTML = '';
             
-            // Parse the keywords string into an object (assuming it's JSON formatted)
-            let keywords;
-            try {
-                keywords = JSON.parse(data.keywords);
-            } catch (e) {
-                // If not JSON, treat it as plain text
-                keywords = data.keywords;
-            }
-
-            // If keywords is an object/array, format accordingly
-            if (typeof keywords === 'object') {
-                Object.entries(keywords).forEach(([english, arabic]) => {
+            // Split the keywords into individual terms
+            const terms = data.keywords.split('\n\n');
+            
+            terms.forEach(term => {
+                // Extract Arabic term, English term using regex
+                const matchResult = term.match(/(.*?)\s*\((.*?)\):/);
+                if (matchResult) {
+                    const arabicTerm = matchResult[1].trim();
+                    const englishTerm = matchResult[2].trim();
+                    
                     terminologyList.innerHTML += `
                         <div class="terminology-item">
-                            <div class="term-english">${english}</div>
-                            <div class="term-arabic">${arabic}</div>
+                            <div class="term-english">${englishTerm}</div>
+                            <div class="term-arabic">${arabicTerm}</div>
                         </div>
                     `;
-                });
-            } else {
-                // If it's plain text, display as is
-                terminologyList.innerHTML = `
-                    <div class="terminology-item">
-                        <div class="term-arabic">${keywords}</div>
-                    </div>
-                `;
-            }
+                }
+            });
         }
     }
 }

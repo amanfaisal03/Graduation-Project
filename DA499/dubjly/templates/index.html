@@ -244,28 +244,57 @@
     }
  }
 
-  // Generate keywords
-  async function generate_keywords(videoId) {
-      const response = await fetch(`/api/videos/${videoId}/keywords/`, {
+// generate_keywords function
+async function generate_keywords(videoId) {
+    const response = await fetch(`/api/videos/${videoId}/keywords/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
         }
-      });
-      
-      const data = await response.json();
+    });
     
+    const data = await response.json();
+
     if (response.ok) {
-      // Update keywords section with a more specific selector
-      const KeywordCard = document.querySelector('.sidebar .card:nth-child(1)');
-      const KeywordParagraph = KeywordCard.querySelector('.card-content p');
-      
-      if (KeywordParagraph) {
-        KeywordParagraph.textContent = data.keywords.substring(0, 500) + '...';
-      }
+        // Update keywords section with the correct selector
+        const keywordCard = document.querySelector('.sidebar .card:nth-child(1)'); // Changed to first card
+        const terminologyList = keywordCard.querySelector('.terminology-list');
+        
+        if (terminologyList) {
+            // Clear existing terminology items
+            terminologyList.innerHTML = '';
+            
+            // Parse the keywords string into an object (assuming it's JSON formatted)
+            let keywords;
+            try {
+                keywords = JSON.parse(data.keywords);
+            } catch (e) {
+                // If not JSON, treat it as plain text
+                keywords = data.keywords;
+            }
+
+            // If keywords is an object/array, format accordingly
+            if (typeof keywords === 'object') {
+                Object.entries(keywords).forEach(([english, arabic]) => {
+                    terminologyList.innerHTML += `
+                        <div class="terminology-item">
+                            <div class="term-english">${english}</div>
+                            <div class="term-arabic">${arabic}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                // If it's plain text, display as is
+                terminologyList.innerHTML = `
+                    <div class="terminology-item">
+                        <div class="term-arabic">${keywords}</div>
+                    </div>
+                `;
+            }
+        }
     }
- }
+}
 
   // Ask question
   document.querySelector('.chat-input button').addEventListener('click', async function() {

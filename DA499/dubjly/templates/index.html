@@ -223,28 +223,6 @@
 
   // Generate summary
   async function generateSummary(videoId) {
-    try {
-      const response = await fetch(`/api/videos/${videoId}/summary/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        }
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Update summary section
-        document.querySelector('.card-content p').textContent = data.summary.substring(0, 250) + '...';
-      }
-    } catch (error) {
-      console.error('Error generating summary:', error);
-    }
-  }
-
-  // Generate keywords
-  async function generateSummary(videoId) {
       const response = await fetch(`/api/videos/${videoId}/summary/`, {
         method: 'POST',
         headers: {
@@ -264,7 +242,30 @@
         summaryParagraph.textContent = data.summary.substring(0, 250) + '...';
       }
     }
-}
+ }
+
+  // Generate keywords
+  async function generate_keywords(videoId) {
+      const response = await fetch(`/api/videos/${videoId}/keywords/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        }
+      });
+      
+      const data = await response.json();
+    
+    if (response.ok) {
+      // Update keywords section with a more specific selector
+      const KeywordCard = document.querySelector('.sidebar .card:nth-child(2)');
+      const KeywordParagraph = KeywordCard.querySelector('.card-content p');
+      
+      if (KeywordParagraph) {
+        KeywordParagraph.textContent = data.keywords.substring(0, 500) + '...';
+      }
+    }
+ }
 
   // Ask question
   document.querySelector('.chat-input button').addEventListener('click', async function() {

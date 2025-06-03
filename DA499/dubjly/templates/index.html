@@ -270,8 +270,8 @@ async function generate_keywords(videoId) {
                 const terms = data.keywords.split('\n\n');
                 
                 terms.forEach(term => {
-                    // Updated regex pattern to match the actual format
-                    const matchResult = term.match(/\*(.*?)\s*\((.*?)\)\*:\s*(.*)/);
+                    // Updated regex pattern to match double asterisks
+                    const matchResult = term.match(/\*\*(.*?)\s*\((.*?)\)\*\*:\s*(.*)/);
                     if (matchResult) {
                         const arabicTerm = matchResult[1].trim();
                         const englishTerm = matchResult[2].trim();
@@ -292,9 +292,9 @@ async function generate_keywords(videoId) {
                     }
                 });
 
+                // Check if any terms were added
                 if (terminologyList.children.length === 0) {
-                    console.error('No terms were parsed from the response');
-                    terminologyList.innerHTML = '<div class="terminology-item">No keywords available</div>';
+                    terminologyList.innerHTML = '<div class="terminology-item">لا توجد مصطلحات متاحة</div>';
                 }
             }
         } else {

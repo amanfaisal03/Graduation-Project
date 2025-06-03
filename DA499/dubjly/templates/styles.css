@@ -407,6 +407,41 @@ input[type="text"]:focus {
   align-self: flex-end;
 }
 
+/* New Testing styles */
+
+.terminology-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s;
+}
+
+.term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.term-english {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.term-arabic {
+    color: var(--dark);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.term-description {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+/* End New Testing styles */
+
 /* Responsive */
 @media (max-width: 768px) {
   .dashboard {

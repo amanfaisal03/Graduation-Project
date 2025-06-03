@@ -246,47 +246,62 @@
 
 // generate_keywords function 
 async function generate_keywords(videoId) {
-    const response = await fetch(`/api/videos/${videoId}/keywords/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
-        }
-    });
+    try {
+        const response = await fetch(`/api/videos/${videoId}/keywords/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            }
+        });
     
-    const data = await response.json();
+        const data = await response.json();
+        console.log('Keywords response:', data); // Debug log
 
-    if (response.ok) {
-        const keywordCard = document.querySelector('.sidebar .card:nth-child(1)');
-        const terminologyList = keywordCard.querySelector('.terminology-list');
-        
-        if (terminologyList) {
-            // Clear existing terminology items
-            terminologyList.innerHTML = '';
+        if (response.ok) {
+            const keywordCard = document.querySelector('.sidebar .card:nth-child(1)');
+            const terminologyList = keywordCard.querySelector('.terminology-list');
             
-            // Split the keywords into individual terms
-            const terms = data.keywords.split('\n\n');
-            
-            terms.forEach(term => {
-                // Extract Arabic term, English term, and description using regex
-                const matchResult = term.match(/(.*?)\s*\((.*?)\):\s*(.*)/);
-                if (matchResult) {
-                    const arabicTerm = matchResult[1].trim();
-                    const englishTerm = matchResult[2].trim();
-                    const description = matchResult[3].trim();
-                    
-                    terminologyList.innerHTML += `
-                        <div class="terminology-item">
-                            <div class="term-header">
-                                <div class="term-english">${englishTerm}</div>
-                                <div class="term-arabic">${arabicTerm}</div>
+            if (terminologyList) {
+                // Clear existing terminology items
+                terminologyList.innerHTML = '';
+                
+                // Split the keywords by double newline
+                const terms = data.keywords.split('\n\n');
+                console.log('Split terms:', terms); // Debug log
+                
+                terms.forEach(term => {
+                    // Match Arabic term (English term): description format
+                    const matchResult = term.match(/\*\*(.*?)\*\*\s*\((.*?)\):\s*(.*)/);
+                    if (matchResult) {
+                        const arabicTerm = matchResult[1].trim();
+                        const englishTerm = matchResult[2].trim();
+                        const description = matchResult[3].trim();
+                        
+                        const termHtml = `
+                            <div class="terminology-item">
+                                <div class="term-header">
+                                    <div class="term-arabic">${arabicTerm}</div>
+                                    <div class="term-english">${englishTerm}</div>
+                                </div>
+                                <div class="term-description">${description}</div>
                             </div>
-                            <div class="term-description">${description}</div>
-                        </div>
-                    `;
+                        `;
+                        terminologyList.innerHTML += termHtml;
+                    }
+                });
+
+                // If no terms were added, log an error
+                if (terminologyList.children.length === 0) {
+                    console.error('No terms were parsed from the response');
+                    console.log('Raw keywords data:', data.keywords);
                 }
-            });
+            }
+        } else {
+            console.error('Error fetching keywords:', data);
         }
+    } catch (error) {
+        console.error('Error in generate_keywords:', error);
     }
 }
 

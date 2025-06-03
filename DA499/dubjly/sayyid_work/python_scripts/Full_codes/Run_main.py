@@ -9,7 +9,7 @@ class Start_the_TTS_process:
 
         self.BASE_DIR = base_dir
         self.TEXT_INPUT = text_input_path
-        self.video_id = video_id or "default"
+        self.video_id = video_id 
 
         # المجلد الخاص بالفيديو الحالي
         self.OUTPUT_DIR = os.path.join(base_dir, "media", "video_outputs", f"video_{self.video_id}")

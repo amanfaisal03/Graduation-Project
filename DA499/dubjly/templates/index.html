@@ -348,7 +348,7 @@ document.querySelector('.input-group button').addEventListener('click', async fu
 
       // 1. توليد الملخص أولاً وانتظر انتهاءه
       await generateSummary(currentVideoId);
-
+      await generateKeywords(currentVideoId);
       // 2. بعد نجاح الملخص، استدعي دبلجة الفيديو
       const ttsResponse = await fetch(`/tts/generate/${currentVideoId}/`);
       const ttsData = await ttsResponse.json();
@@ -368,7 +368,7 @@ document.querySelector('.input-group button').addEventListener('click', async fu
       }
 
       // 3. توليد الكلمات المفتاحية (اختياري)
-      generateKeywords(currentVideoId);
+      
 
     } else {
       alert('حدث خطأ: ' + data.error);

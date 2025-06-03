@@ -256,7 +256,7 @@ async function generate_keywords(videoId) {
         });
     
         const data = await response.json();
-        console.log('Keywords response:', data); // Debug log
+        console.log('Keywords response:', data);
 
         if (response.ok) {
             const keywordCard = document.querySelector('.sidebar .card:nth-child(1)');
@@ -268,11 +268,10 @@ async function generate_keywords(videoId) {
                 
                 // Split the keywords by double newline
                 const terms = data.keywords.split('\n\n');
-                console.log('Split terms:', terms); // Debug log
                 
                 terms.forEach(term => {
-                    // Match Arabic term (English term): description format
-                    const matchResult = term.match(/\*\*(.*?)\*\*\s*\((.*?)\):\s*(.*)/);
+                    // Updated regex pattern to match the actual format
+                    const matchResult = term.match(/\*(.*?)\s*\((.*?)\)\*:\s*(.*)/);
                     if (matchResult) {
                         const arabicTerm = matchResult[1].trim();
                         const englishTerm = matchResult[2].trim();
@@ -288,13 +287,14 @@ async function generate_keywords(videoId) {
                             </div>
                         `;
                         terminologyList.innerHTML += termHtml;
+                    } else {
+                        console.error('Failed to parse term:', term);
                     }
                 });
 
-                // If no terms were added, log an error
                 if (terminologyList.children.length === 0) {
                     console.error('No terms were parsed from the response');
-                    console.log('Raw keywords data:', data.keywords);
+                    terminologyList.innerHTML = '<div class="terminology-item">No keywords available</div>';
                 }
             }
         } else {

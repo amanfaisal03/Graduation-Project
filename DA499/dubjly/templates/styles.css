@@ -412,7 +412,6 @@ input[type="text"]:focus {
 .terminology-item {
     padding: 1rem;
     border-bottom: 1px solid var(--border);
-    transition: background-color 0.2s;
 }
 
 .term-header {
@@ -423,21 +422,20 @@ input[type="text"]:focus {
 }
 
 .term-arabic {
-    color: var(--dark);
     font-size: 1rem;
     font-weight: 600;
+    color: var(--dark);
 }
 
 .term-english {
-    color: var(--primary);
-    font-weight: 500;
     font-size: 0.9rem;
+    color: var(--primary);
 }
 
 .term-description {
-    color: var(--gray);
     font-size: 0.9rem;
     line-height: 1.6;
+    color: var(--gray);
     margin-top: 0.5rem;
 }
 /* End New Testing styles */

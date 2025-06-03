@@ -440,6 +440,21 @@ input[type="text"]:focus {
 }
 /* End New Testing styles */
 
+/* Summary styles */
+/* Update the summary text color and style */
+.sidebar .card:nth-child(2) .card-content p {
+    color: var(--dark); /* Instead of var(--gray) */
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Also update the list items color if needed */
+.sidebar .card:nth-child(2) .card-content ul {
+    color: var(--dark);
+    line-height: 1.6;
+}
+/* End Summary styles */
+
 /* Responsive */
 @media (max-width: 768px) {
   .dashboard {

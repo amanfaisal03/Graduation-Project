@@ -260,7 +260,7 @@ async function generate_keywords(videoId) {
 
         if (response.ok) {
             const keywordCard = document.querySelector('.sidebar .card:nth-child(1)');
-            const terminologyList = keywordCard.querySelector('.terminology-list');
+            const terminologyList = keywordCard.querySelector('.terminology-list'); // ** A (E)** : ...... \n .............. \n .........
             
             if (terminologyList) {
                 // Clear existing terminology items
@@ -355,8 +355,7 @@ async function generate_keywords(videoId) {
       alert('حدث خطأ في معالجة السؤال');
     }
   });
-   // ✅ عند الضغط على زر "معالجة"
-  // ...existing code...
+
 
 document.querySelector('.input-group button').addEventListener('click', async function () {
   const urlInput = document.querySelector('.input-group input');

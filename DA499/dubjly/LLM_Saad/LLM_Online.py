@@ -2,7 +2,6 @@ from groq import Groq
 
 # This class for using a LLM from GROQ Cloud so rather than download the LLM on our system, we can use this class to use the LLM from the cloud.
 class Groq_Env():
-
     def __init__(self, API_Key="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",Model="qwen-2.5-32b"):
         """
         initialize the Groq_Env class with the API key and model name.
@@ -11,8 +10,9 @@ class Groq_Env():
         self.model = Model
 
     def Groq_chat_completion(self, role = "assistant", messages_content = "مرحبا, كيف الحال",
-              temperature=0.6, max_completion_tokens=8100, top_p=0.95, stream=True, stop=None):
+              temperature=0.5, max_completion_tokens=8100, top_p=0.9, stream=True, stop=None):
         """
+         0 - 1 , 0.5
         Generate an answer using the Groq model.
         this function will help us in test Groq models and compare between them.
         We can use it inside the other methods.
@@ -23,7 +23,7 @@ class Groq_Env():
                 messages=[{"role":"system","content":"You have to give the answer in the arabic language"},
                           {"role": role, "content": messages_content}],
                 temperature=temperature,
-                max_completion_tokens=max_completion_tokens,
+                #max_completion_tokens=max_completion_tokens,
                 top_p=top_p,
                 stream=stream,
                 stop=stop,
@@ -41,7 +41,7 @@ class Groq_Env():
         
         #convert the completion to string
         answer = ""
-        for chunk in completion:
+        for chunk in completion: # [ , , , , , , ]
             answer += chunk.choices[0].delta.content or ""
         return answer
     
@@ -86,7 +86,7 @@ class Full_LLM(Groq_Env):
         for i in text:
             if i == "\n":
                 s += " "
-            elif not i.isdigit():
+            elif not i.isdigit() or i not in [ "[", "]", "-"]:
                 s += i
         print("Deleting Time Done")
         return s

@@ -107,6 +107,14 @@ def generate_summary(request, video_id):
     try:
         video = Video.objects.get(id=video_id)
         
+        # Check if keywords already exist
+        if video.summary:
+           return Response({
+            "success": True,
+            "summary": summary
+            #"keywords": keywords
+            })
+
         # Generate Arabic transcript and other metadata
         llm = Full_LLM(model=LLM_MODEL, api_key=GROQ_API_KEY, Text=video.transcript, Online=True)
         arabic_transcript = llm.Transcript()
@@ -116,13 +124,13 @@ def generate_summary(request, video_id):
         # Save results to database
         video.a_transcript = arabic_transcript
         video.summary = summary
-        video.keywords = keywords
+        #video.keywords = keywords
         video.save()
         
         return Response({
             "success": True,
-            "summary": summary,
-            "keywords": keywords
+            "summary": summary
+            #"keywords": keywords
         })
     except Video.DoesNotExist:
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)

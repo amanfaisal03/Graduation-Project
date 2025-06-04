@@ -111,7 +111,7 @@ def generate_summary(request, video_id):
         if video.summary:
            return Response({
             "success": True,
-            "summary": summary
+            "summary": summary,
             "keywords": keywords
             })
 
@@ -129,7 +129,7 @@ def generate_summary(request, video_id):
         
         return Response({
             "success": True,
-            "summary": summary
+            "summary": summary,
             "keywords": keywords
         })
     except Video.DoesNotExist:

@@ -108,12 +108,12 @@ def generate_summary(request, video_id):
         video = Video.objects.get(id=video_id)
         
         # Check if keywords already exist
-        if video.summary:
+        """if video.summary:
            return Response({
             "success": True,
             "summary": summary,
             "keywords": keywords
-            })
+            })"""
 
         # Generate Arabic transcript and other metadata
         llm = Full_LLM(model=LLM_MODEL, api_key=GROQ_API_KEY, Text=video.transcript, Online=True)

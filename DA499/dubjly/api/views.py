@@ -112,7 +112,7 @@ def generate_summary(request, video_id):
            return Response({
             "success": True,
             "summary": summary
-            #"keywords": keywords
+            "keywords": keywords
             })
 
         # Generate Arabic transcript and other metadata
@@ -124,13 +124,13 @@ def generate_summary(request, video_id):
         # Save results to database
         video.a_transcript = arabic_transcript
         video.summary = summary
-        #video.keywords = keywords
+        video.keywords = keywords
         video.save()
         
         return Response({
             "success": True,
             "summary": summary
-            #"keywords": keywords
+            "keywords": keywords
         })
     except Video.DoesNotExist:
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)

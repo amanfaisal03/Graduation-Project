@@ -2,7 +2,7 @@ from groq import Groq
 
 # This class for using a LLM from GROQ Cloud so rather than download the LLM on our system, we can use this class to use the LLM from the cloud.
 class Groq_Env():
-    def __init__(self, API_Key="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",Model="qwen-2.5-32b"):
+    def __init__(self, API_Key="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",Model="qwen/qwen3-32b"):
         """
         initialize the Groq_Env class with the API key and model name.
         """
@@ -58,7 +58,7 @@ class Groq_Env():
 
 # This Class can accepte both Groq and Ollama models.
 class Full_LLM(Groq_Env):
-    def __init__(self, model = "qwen-2.5-32b" ,api_key="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",Text=None,Online=True):
+    def __init__(self, model = "qwen-2.5-32b" ,api_key="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",Text=None,Online=True):
         Groq_Env.__init__(self, api_key, model)
         self.online = Online
         self.T_Text = Text # text with time
@@ -91,18 +91,18 @@ class Full_LLM(Groq_Env):
         print("Deleting Time Done")
         return s
 
-    def ollama_answer(self, question, model = "llama3.1:latest"):
-        """
-        Generate an answer using the ollama models.
-        This function will help us in test ollama models and compare between them.
-        We can use it inside the other methods.
-        """
-        from ollama import chat
-        from ollama import ChatResponse
+    # def ollama_answer(self, question, model = "llama3.1:latest"):
+    #     """
+    #     Generate an answer using the ollama models.
+    #     This function will help us in test ollama models and compare between them.
+    #     We can use it inside the other methods.
+    #     """
+    #     from ollama import chat
+    #     from ollama import ChatResponse
 
-        response: ChatResponse = chat(model=model, messages=[{ 'role': 'user','content': question},])
-        # response.message.content doesn't work, just response['message']['content']     
-        return response['message']['content'] 
+    #     response: ChatResponse = chat(model=model, messages=[{ 'role': 'user','content': question},])
+    #     # response.message.content doesn't work, just response['message']['content']     
+    #     return response['message']['content'] 
     
     def model_answer(self, question,role = "user"):
         """
@@ -142,21 +142,21 @@ class Full_LLM(Groq_Env):
         """
         return self.model_answer(self.Prompts["Transcript"])
     
-    def Questions_Answers(self):
-        """
-        Generate test questions and answers using the LLM model & Return it as a string        
-        """
-        return self.model_answer(self.Prompts["Quesitons & Answers"])
+    # def Questions_Answers(self):
+    #     """
+    #     Generate test questions and answers using the LLM model & Return it as a string        
+    #     """
+    #     return self.model_answer(self.Prompts["Quesitons & Answers"])
     
-    def ChatBot_Answer(self, text = None, question = None):
-        """
-        Generate a chatbot answer using the LLM model.
-        """
-        if text is None:
-            text = self.C_Text
+    # def ChatBot_Answer(self, text = None, question = None):
+    #     """
+    #     Generate a chatbot answer using the LLM model.
+    #     """
+    #     if text is None:
+    #         text = self.C_Text
 
-        question = self.Prompts["ChatBot Answer"] + question        
-        return self.model_answer(question)
+    #     question = self.Prompts["ChatBot Answer"] + question        
+    #     return self.model_answer(question)
 
     def __str__(self):
         return f"LLM Class with model: {self.model} and text: {self.C_Text}"

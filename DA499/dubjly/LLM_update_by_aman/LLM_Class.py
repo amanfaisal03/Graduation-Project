@@ -30,14 +30,14 @@ class The_LLM():
         print("Deleting Time Done")
         return s
 
-    def ollama_answer(self, question, modell = "llama3.1:latest"):
-        """
-        Generate an answer using the ollama models.
-        This function will help us in test ollama models and compare between them.
-        We can use it inside the other methods.
-        """
-        from ollama import chat
-        from ollama import ChatResponse
+    # def ollama_answer(self, question, modell = "llama3.1:latest"):
+    #     """
+    #     Generate an answer using the ollama models.
+    #     This function will help us in test ollama models and compare between them.
+    #     We can use it inside the other methods.
+    #     """
+    #     from ollama import chat
+    #     from ollama import ChatResponse
 
         response: ChatResponse = chat(model=modell, messages=[{ 'role': 'user','content': question},])
         # response.message.content doesn't work, but response['message']['content']  work very well.

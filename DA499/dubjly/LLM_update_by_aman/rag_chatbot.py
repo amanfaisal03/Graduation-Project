@@ -1,13 +1,13 @@
 from LLM_Online import * 
-from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.chains import RetrievalQA
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_groq import ChatGroq
 
 
 class RAG_System:
-    def __init__(self, video_text, api_key="k_BKbu896AjrZq9RPjI3AsWGdyb3FYj52pYGChMT5A8aL4L4OVwARc"):
+    def __init__(self, video_text, api_key="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"):
      
         self.llm_text = Full_LLM(Text=video_text)
         self.text = self.llm_text.C_Text  
@@ -44,7 +44,7 @@ class RAG_System:
 
     def llm_Initialization(self):
         """Initialize the LLM."""
-        llm = ChatGroq(model="qwen-2.5-32b", temperature=0, api_key=self.api_key)
+        llm = ChatGroq(model="qwen/qwen3-32b", temperature=0, api_key=self.api_key)
         return llm
 
     def Retriever(self, vector_store, llm):
@@ -55,5 +55,5 @@ class RAG_System:
     def RAG_Chatbot(self, retriever, question):
         """Answer a question using the RAG system."""
         answer = retriever.run(question)
-        print("\n💬 الإجابة:\n", answer)
+        print("\nإجابة:\n", answer)
         return answer

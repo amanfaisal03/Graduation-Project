@@ -1,0 +1,17 @@
+ok 
+first step i want to delete all saad work ( so bad --> just api +prompt engineering )
+then all code i want to write with langchain 
+why langchain ? 
+- retreval 
+- hestory data --> for chatbot  (memory)
+- Agent --> when i call api llm (last apudat of data seince 2023 or older than ) but when i work with langchain if user ask about any think happend these days the model will search in google or any search enggine 
+https://www.youtube.com/watch?v=ly04c3Ft6ac&list=PL1E7ofaSbZeLnWa8pglu8Z3iFnnv2WjuY&index=6
+https://python.langchain.com/docs/introduction/ 
+
+3 - ubdate Ragchatbot to save all video and retreval any one 
+if user study in playlist and have qustion (Ragchatbot help hem)
+
+
+one week for this plan ( insallah )
+
+
